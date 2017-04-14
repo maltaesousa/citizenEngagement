@@ -1,10 +1,11 @@
-angular.module('app', ['ui.router', 'angular-storage']);
+angular.module('app', ['ui.router', 'angular-storage', 'ui.bootstrap']);
 
-angular.module('app').config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+angular.module('app').config(function ($locationProvider, $stateProvider,
+ $urlRouterProvider, $httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
     $stateProvider
     .state('home', {
-        url: '',
+        url: '/',
         templateUrl: './templates/main.html'
     });
 
@@ -22,6 +23,8 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, $http
     $urlRouterProvider.otherwise(function($injector) {
         $injector.get('$state').go('home');
     });
+
+    $locationProvider.html5Mode(true);
 });
 
 angular.module('app').run(function(AuthService, $rootScope, $state) {
