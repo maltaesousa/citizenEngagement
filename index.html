@@ -8,19 +8,17 @@
 
     <title>Angular Auth Starter</title>
 
-    <!-- Third-party styles -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
-    <!-- Application styles -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
     <link rel="stylesheet" href="css/app.css">
   </head>
 
   <body ng-app='app'>
     <div ui-view />
-    
-    <!-- Script inclusions -->
+
     <script type="text/javascript" src="assets/js/lodash.min.js"></script>
     <script type="text/javascript" src="assets/js/moment.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
     <script type="text/javascript" src="assets/js/angular.min.js"></script>
     <script type="text/javascript" src="assets/js/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="assets/js/angular-storage.min.js"></script>
@@ -30,5 +28,6 @@
     <script type="text/javascript" src="js/login-ctrl.js"></script>
     <script type="text/javascript" src="js/logout-ctrl.js"></script>
     <script type="text/javascript" src="js/auth-interceptor.js"></script>
+    <script type="text/javascript" src="js/map.js"></script>    
   </body>
 </html>

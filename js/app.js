@@ -35,12 +35,3 @@ angular.module('app').run(function(AuthService, $rootScope, $state) {
         }
     });
 });
-
-angular.module('app').run(function(AuthService, $rootScope, $state) {
-    $rootScope.$on('$stateChangeStart', function(event, toState) {
-        if (!AuthService.token && toState.name !== 'login') {
-            event.preventDefault();
-            $state.go('login');
-        }
-    });
-});
