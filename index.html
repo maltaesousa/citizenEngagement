@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <base href="/">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Angular Auth Starter</title>
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
-    <link rel="stylesheet" href="css/app.css">
-  </head>
+  <title>Angular Auth Starter</title>
 
-  <body ng-app='app'>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body ng-app='app'>
+  <div class="container-fluid">
     <div ui-view />
 
     <script type="text/javascript" src="assets/js/lodash.min.js"></script>
@@ -28,6 +30,8 @@
     <script type="text/javascript" src="js/login-ctrl.js"></script>
     <script type="text/javascript" src="js/logout-ctrl.js"></script>
     <script type="text/javascript" src="js/auth-interceptor.js"></script>
-    <script type="text/javascript" src="js/map.js"></script>    
-  </body>
+    <script type="text/javascript" src="js/map.js"></script>
+  </div>
+</body>
+
 </html>
