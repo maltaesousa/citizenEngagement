@@ -6,7 +6,7 @@
   <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-body">
-        <form id="login" name="loginForm">
+        <form id="login" name="loginForm" novalidate>
           <div class="form-group">
             <label for="username" class="sr-only">Username</label>
             <input required type="text" id="username" placeholder="Username" class="form-control" ng-model="login.user.name">
@@ -24,7 +24,7 @@
   <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-body">
-        <form id="signup" name="signupForm">
+        <form id="signup" name="signupForm" novalidate>
           <div class="form-group">
             <label for="new-firstname" class="sr-only">Username</label>
             <input required type="text" id="new-firstname" placeholder="First name" class="form-control" ng-model="login.newuser.firstname">
