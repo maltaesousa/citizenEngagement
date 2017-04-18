@@ -1,4 +1,8 @@
-<h1>Main page</h1>
+<div id="map-canvas" ng-controller="MapCtrl as map">
+    <leaflet width="100vw" height="100vh"
+    lf-center="map.center"></leaflet>
+</div>
 <button href="#" class="btn btn-success btn-circle btn-xl pull-bottom-right">
     <i class="glyphicon glyphicon-map-marker"></i>
 </button>
+<button class="btn btn-default pull-right" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">Log out</button>
