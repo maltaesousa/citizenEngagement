@@ -1,15 +1,30 @@
-/* For the button */
+/** Make container and body unclickable,
+ * so the map will get the mouse events
+ */
+body, div.container-fluid {
+  pointer-events: none;
+  padding-top: 1em;
+}
+
+div.container-fluid * {
+  pointer-events: auto;
+}
+
+/* Styling the map and the positions of views and tools on it */
+
 #map-canvas {
   position: absolute;
   top :0;
   left: 0;
   z-index: -1;
 }
+
 .pull-bottom-right {
   position: absolute;
   bottom: 1em;
   right: 1em;
 }
+
 /**
  * The folowing btn-circle stylings have been copied from:
  * http://bootsnipp.com/snippets/featured/circle-button

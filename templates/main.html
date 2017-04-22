@@ -1,8 +1,24 @@
-<div id="map-canvas" ng-controller="MapCtrl as map">
-    <leaflet width="100vw" height="100vh"
-    lf-center="map.center"></leaflet>
-</div>
-<button href="#" class="btn btn-success btn-circle btn-xl pull-bottom-right">
+<div ng-controller="MapCtrl as map">
+  <div id="map-canvas">
+    <leaflet defaults="map.defaults" width="100vw" height="100vh"
+     lf-center="map.center" ng-style="{'cursor' : map.cursor}"></leaflet>
+  </div>
+  <button href="#" class="btn btn-success btn-circle btn-xl pull-bottom-right"
+    ng-click="map.toggleEditMode()" ng-class="{ 'active': map.editMode }">
     <i class="glyphicon glyphicon-map-marker"></i>
-</button>
+  </button>
+</div>
+
+<div ng-controller="IssuesCtrl as issuesCtrl">
+  <section class="col-md-4">
+    <div class="list-group">
+      <a class="list-group-item" ng-repeat="issue in issuesCtrl.issues">
+          <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+          <h4 class="list-group-item-heading">{{ issue.issueTypeHref }}</h4>
+          <span class="badge">{{ issue.state }}</span>
+          <p class="list-group-item-text">{{ issue.description }}</p>
+      </a>
+    </div>
+  </section>
+</div>
 <button class="btn btn-default pull-right" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">Log out</button>
