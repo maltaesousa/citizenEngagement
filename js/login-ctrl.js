@@ -18,7 +18,6 @@ angular.module('app').controller('LoginCtrl', function (AuthService, $http, $sta
           message : "Unable to log you.",
           error: true
         }
-
       console.log(error);
     });
   };

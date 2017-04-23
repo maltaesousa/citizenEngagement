@@ -1,10 +1,10 @@
 angular.module('app').controller('MapCtrl', function( $scope, $geolocation ) {
   var map = this;
   map.editMode = false;
-  map.cursor = 'auto';
+  map.cursor = 'auto'; // changes the cursor style
 
   map.defaults = {
-    zoomControl: false
+    zoomControl: false // the scroll wheel you shall use
   };
 
   map.center = {
@@ -14,6 +14,9 @@ angular.module('app').controller('MapCtrl', function( $scope, $geolocation ) {
     zoom: 15 // This one is actually optional
   }
 
+/**
+ * This switches the edit mode on or off
+ */
   map.toggleEditMode = function() {
     if (map.editMode) {
       map.editMode = false;
@@ -24,11 +27,14 @@ angular.module('app').controller('MapCtrl', function( $scope, $geolocation ) {
     }
   }
 
+/**
+ * What happens when user clicks on canvas
+ */
   $scope.$on('leafletDirectiveMap.click', function(event, args) {
     if (map.editMode) {
       console.log(args);
       map.toggleEditMode();
-    } // Will give you the updated marker object
+    }
   });
 
   $geolocation.getCurrentPosition()
