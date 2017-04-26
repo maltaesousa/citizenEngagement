@@ -1,13 +1,3 @@
-/**
- * login and sign up forms styling
- */
-.tooltip {
-  max-width: 215px;
-  display: inline-block;
-  overflow-wrap: break-word;
-  float: left;
-}
-
 /** Make container and body unclickable,
  * so the map will get the mouse events
  */
