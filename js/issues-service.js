@@ -6,14 +6,6 @@ angular.module('app').factory('IssuesService', function($http) {
 
   service.getIssues = function() {
     return loadIssues().then(function(issues) {
-      _.each(issues, function(issue) {
-        // merge the issueType data to issue
-        service.getType(issue.issueTypeHref).then(function(ref) {
-          issue.issueType = ref;
-        });
-        console.log(issue.issueType);
-      });
-
       return issues });
   };
 
@@ -35,7 +27,7 @@ angular.module('app').factory('IssuesService', function($http) {
       issuesPromise = $http({
         method: "GET",
         url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
-        params: {}
+        params: { include: "issueType" }
       }).then(function(res) {
         return res.data;
       });
@@ -43,7 +35,7 @@ angular.module('app').factory('IssuesService', function($http) {
 
     return issuesPromise;
   }
-
+/*
   var typesPromise
   function loadTypes() {
     if (!typesPromise) {
@@ -58,6 +50,6 @@ angular.module('app').factory('IssuesService', function($http) {
 
     return typesPromise;
   }
-
+*/
   return service;
 });
