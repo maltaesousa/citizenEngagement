@@ -15,6 +15,27 @@ angular.module('app').controller('MapCtrl', function( $scope, $geolocation ) {
   }
 
 /**
+ * Markers handler
+ */
+  var defaultIcon = {
+    iconUrl: "assets/leaflet/images/marker-icon.png",
+    shadowUrl: "assets/leaflet/images/marker-shadow.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    tooltipAnchor: [16, -28],
+    shadowSize: [41, 41]
+  }
+
+  map.markers = [
+    {
+      lat: 46.778474,
+      lng: 6.641183,
+      icon: defaultIcon
+    }
+  ]
+
+/**
  * This switches the edit mode on or off
  */
   map.toggleEditMode = function() {

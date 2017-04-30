@@ -1,12 +1,21 @@
+section.col-md-4 {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.list-group {
+  margin: 0;
+}
+
 /** Make container and body unclickable,
  * so the map will get the mouse events
  */
-body, div.container-fluid {
+body, div.no-events {
   pointer-events: none;
-  padding-top: 1em;
 }
 
-div.container-fluid * {
+div.no-events * {
   pointer-events: auto;
 }
 
