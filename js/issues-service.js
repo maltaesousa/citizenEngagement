@@ -6,6 +6,15 @@ angular.module('app').factory('IssuesService', function($http) {
 
   service.getIssues = function() {
     return fetchAllIssues().then(function(issues) {
+      _.each(issues, function(issue) {
+        issue.lat = issue.location.coordinates[1];
+        issue.lng = issue.location.coordinates[0];
+      });
+      return issues });
+  };
+
+  service.refreshIssues = function() {
+    return fetchAllIssues(cache=false).then(function(issues) {
       return issues });
   };
 
@@ -15,17 +24,18 @@ angular.module('app').factory('IssuesService', function($http) {
     });
   };
 
-  function fetchAllIssues(page, issues) {
+  function fetchAllIssues(page, issues, cache) {
     page = page || 1;
     issues = issues || [];
+    cache = cache || true;
     return $http({
       method: "GET",
+      cache: cache,
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
       params: { include: "issueType", page: page }
     }).then(function(res) {
       if (res.data.length) {
         issues = issues.concat(res.data);
-        console.log(page);
         return fetchAllIssues(page + 1, issues);
       }
       return issues;

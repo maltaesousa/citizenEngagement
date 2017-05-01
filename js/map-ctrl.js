@@ -1,4 +1,6 @@
-angular.module('app').controller('MapCtrl', function( $scope, IssuesService, $geolocation ) {
+angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geolocation) {
+  var MapCtrl = this;
+
   var map = this;
   map.editMode = false;
   map.cursor = 'auto'; // changes the cursor style
@@ -7,6 +9,10 @@ angular.module('app').controller('MapCtrl', function( $scope, IssuesService, $ge
   map.defaults = {
     zoomControl: false // the scroll wheel you shall use
   };
+
+  $scope.$on('my-event', function(event, arg1) {
+    console.log("coucou" + arg1);
+  });
 
   map.center = {
     // These are the coordinates for the center of Yverdon-les-Bains
@@ -20,19 +26,18 @@ angular.module('app').controller('MapCtrl', function( $scope, IssuesService, $ge
  */
   var defaultIcon = {
     type: "vectorMarker",
-    icon: "tag",
+    icon: "coffee",
     markerColor: "red"
   }
-  
+
   IssuesService.getIssues().then(function(issues) {
     _.each(issues, function(issue) {
-        map.markers.push({
-          lat: issue.location.coordinates[1],
-          lng: issue.location.coordinates[0],
-          icon: defaultIcon
-        });
+        issue.icon = defaultIcon;
       });
+      map.markers = issues;
   });
+
+
 
 /**
  * This switches the edit mode on or off
