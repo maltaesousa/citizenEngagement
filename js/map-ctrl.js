@@ -1,4 +1,4 @@
-angular.module('app').controller('MapCtrl', function( $scope, $geolocation ) {
+angular.module('app').controller('MapCtrl', function( $scope, IssuesService, $geolocation ) {
   var map = this;
   map.editMode = false;
   map.cursor = 'auto'; // changes the cursor style
@@ -10,22 +10,29 @@ angular.module('app').controller('MapCtrl', function( $scope, $geolocation ) {
   map.center = {
     // These are the coordinates for the center of Yverdon-les-Bains
     lat: 46.778474,
-    lng: 6.641183,
+    lng: 6.63,
     zoom: 15 // This one is actually optional
   }
 
 /**
- * Markers handler
+ * Markers appearance
  */
   var defaultIcon = {
-    iconUrl: "assets/leaflet/images/marker-icon.png",
-    shadowUrl: "assets/leaflet/images/marker-shadow.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    tooltipAnchor: [16, -28],
-    shadowSize: [41, 41]
+    type: "vectorMarker",
+    icon: "tag",
+    markerColor: "red"
   }
+  
+  IssuesService.getIssues().then(function(issues) {
+    _.each(issues, function(issue) {
+        map.markers.push({
+          lat: issue.location.coordinates[1],
+          lng: issue.location.coordinates[0],
+          icon: defaultIcon
+        });
+      });
+  });
+  
 
   map.markers = [
     {
