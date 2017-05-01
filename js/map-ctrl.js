@@ -2,6 +2,7 @@ angular.module('app').controller('MapCtrl', function( $scope, IssuesService, $ge
   var map = this;
   map.editMode = false;
   map.cursor = 'auto'; // changes the cursor style
+  map.markers = [];
 
   map.defaults = {
     zoomControl: false // the scroll wheel you shall use
@@ -32,15 +33,6 @@ angular.module('app').controller('MapCtrl', function( $scope, IssuesService, $ge
         });
       });
   });
-  
-
-  map.markers = [
-    {
-      lat: 46.778474,
-      lng: 6.641183,
-      icon: defaultIcon
-    }
-  ]
 
 /**
  * This switches the edit mode on or off

@@ -5,51 +5,32 @@ angular.module('app').factory('IssuesService', function($http) {
   var service = {};
 
   service.getIssues = function() {
-    return loadIssues().then(function(issues) {
+    return fetchAllIssues().then(function(issues) {
       return issues });
   };
 
   service.getIssue = function(issueId) {
-    return loadIssues().then(function(issues) {
+    return fetchAllIssues().then(function(issues) {
       return _.find(issues, { id: issueId });
     });
   };
 
-  service.getType = function(typeRef) {
-    return loadTypes().then(function(types) {
-      return _.find(types, { href: typeRef });
+  function fetchAllIssues(page, issues) {
+    page = page || 1;
+    issues = issues || [];
+    return $http({
+      method: "GET",
+      url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
+      params: { include: "issueType", page: page }
+    }).then(function(res) {
+      if (res.data.length) {
+        issues = issues.concat(res.data);
+        console.log(page);
+        return fetchAllIssues(page + 1, issues);
+      }
+      return issues;
     });
   }
 
-  var issuesPromise;
-  function loadIssues() {
-    if (!issuesPromise) {
-      issuesPromise = $http({
-        method: "GET",
-        url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
-        params: { include: "issueType" }
-      }).then(function(res) {
-        return res.data;
-      });
-    }
-
-    return issuesPromise;
-  }
-/*
-  var typesPromise
-  function loadTypes() {
-    if (!typesPromise) {
-      typesPromise = $http({
-        method: "GET",
-        url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issueTypes',
-        params: {}
-      }).then(function(res) {
-        return res.data;
-      });
-    }
-
-    return typesPromise;
-  }
-*/
   return service;
 });
