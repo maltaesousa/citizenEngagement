@@ -1,4 +1,4 @@
-angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geolocation) {
+angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geolocation, $uibModal) {
   var MapCtrl = this;
 
   var map = this;
@@ -10,9 +10,6 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
     zoomControl: false // the scroll wheel you shall use
   };
 
-  $scope.$on('my-event', function(event, arg1) {
-    console.log("coucou" + arg1);
-  });
 
   map.center = {
     // These are the coordinates for the center of Yverdon-les-Bains
@@ -42,13 +39,13 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
 /**
  * This switches the edit mode on or off
  */
-  map.toggleEditMode = function() {
-    if (map.editMode) {
-      map.editMode = false;
-      map.cursor = 'auto'
-    } else {
+  map.toggleEditMode = function(on) {
+    if (on) {
       map.editMode = true;
-      map.cursor = 'crosshair';
+      map.cursor = 'crosshair'
+    } else {
+      map.editMode = false;
+      map.cursor = 'auto';
     }
   }
 
@@ -57,9 +54,21 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
  */
   $scope.$on('leafletDirectiveMap.click', function(event, args) {
     if (map.editMode) {
-      console.log(args);
+      console.log(args.leafletEvent.latlng);
       map.toggleEditMode();
+      $uibModal.open({
+        templateUrl: "templates/savemodal.html",
+        controller: "SaveCtrl",
+        controllerAs: "saveCtrl",
+        resolve: {
+          latlng: args.leafletEvent.latlng
+        }
+      });
     }
+  });
+
+  $scope.$on('leafletDirectiveMap.blur', function(event) {
+    map.toggleEditMode();
   });
 
   $geolocation.getCurrentPosition()

@@ -4,7 +4,7 @@
     <div id="map-canvas">
       <leaflet defaults="map.defaults" markers="map.markers" width="100vw" height="100vh" lf-center="map.center" ng-style="{'cursor' : map.cursor}"></leaflet>
     </div>
-    <button href="#" class="btn btn-success btn-circle btn-xl pull-bottom-right" ng-click="map.toggleEditMode()" ng-class="{ 'active': map.editMode }">
+    <button href="#" class="btn btn-success btn-circle btn-xl pull-bottom-right" ng-click="map.toggleEditMode(true)" ng-class="{ 'active': map.editMode }">
     <i class="glyphicon glyphicon-map-marker"></i>
   </button>
   </section>
