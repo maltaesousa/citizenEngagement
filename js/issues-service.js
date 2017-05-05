@@ -13,24 +13,22 @@ angular.module('app').factory('IssuesService', function($http) {
       return issues });
   };
 
-  service.refreshIssues = function() {
-    return fetchAllIssues(cache=false).then(function(issues) {
-      return issues });
-  };
-
   service.getIssue = function(issueId) {
     return fetchAllIssues().then(function(issues) {
       return _.find(issues, { id: issueId });
     });
   };
 
-  function fetchAllIssues(page, issues, cache) {
+  service.getTypes = function() {
+    return loadTypes().then(function(types) {
+      return types });
+  };
+
+  function fetchAllIssues(page, issues) {
     page = page || 1;
     issues = issues || [];
-    cache = cache || true;
     return $http({
       method: "GET",
-      cache: cache,
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
       params: { include: "issueType", page: page }
     }).then(function(res) {
@@ -40,6 +38,21 @@ angular.module('app').factory('IssuesService', function($http) {
       }
       return issues;
     });
+  }
+
+  var typesPromise
+  function loadTypes() {
+    if (!typesPromise) {
+      typesPromise = $http({
+        method: "GET",
+        url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issueTypes',
+        params: {}
+      }).then(function(res) {
+        return res.data;
+      });
+    }
+
+    return typesPromise;
   }
 
   return service;
