@@ -1,4 +1,10 @@
-angular.module('app', ['ui.router', 'angular-storage', 'ui.bootstrap', 'leaflet-directive', 'ngGeolocation']);
+angular.module('app', [
+  'ui.router',
+  'angular-storage',
+  'ui.bootstrap',
+  'angularjs-dropdown-multiselect',
+  'leaflet-directive',
+  'ngGeolocation']);
 
 angular.module('app').config(function ($locationProvider, $stateProvider,
  $urlRouterProvider, $httpProvider) {

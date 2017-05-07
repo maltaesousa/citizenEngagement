@@ -10,8 +10,23 @@
   </section>
 
   <section class="col-md-4">
+    <!--
+      <div ng-dropdown-multiselect="" options="map.types" selected-model="map.typeFilter" extra-settings="map.filterSettings"></div> <span>{{ map.typeFilter.href }}</span>
+-->
+
     <div class="list-group">
-      <a class="list-group-item" ng-repeat="issue in map.markers">
+      <form class="form-inline list-group-item" id="searchForm" name="searchForm" novalidate>
+        <div class="form-group">
+          <label for="searchText" class="sr-only">Search query</label>
+          <input type="text" class="form-control" id="searchText" name="searchText" placeholder="quick search" ng-model="searchText">
+        </div>
+        <div class="pull-right">
+          <button type="button" class="btn btn-primary">
+        <span class="glyphicon glyphicon-cog"></span>
+      </button>
+        </div>
+      </form>
+      <a class="list-group-item" ng-repeat="issue in map.markers | filter:searchText">
         <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
         <h4 class="list-group-item-heading">{{ issue.issueType.description }} <span class="badge">{{ issue.state }}</span></h4>
         <p class="list-group-item-text">{{ issue.description }}</p>

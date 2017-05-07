@@ -13,7 +13,7 @@
         <label for="type">Type</label>
         <select class="form-control" id="type" name="type" placeholder="type" class="form-control"
           ng-model="saveCtrl.issue.issueTypeHref" required>
-          <option ng-repeat="type in saveCtrl.types" ng-value="type.href">{{ type.name }}</option>
+          <option ng-repeat="type in saveCtrl.types" ng-value="type.href">{{ type.description }}</option>
         </select>
         <p class="help-block" ng-show="saveForm.type.$invalid && saveForm.type.$dirty">
           <em ng-show="saveForm.type.$error.required">Please provide a type</em>

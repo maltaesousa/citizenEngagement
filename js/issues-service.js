@@ -47,7 +47,7 @@ angular.module('app').factory('IssuesService', function($http) {
     return $http({
       method: "GET",
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
-      params: { include: "issueType", page: page }
+      params: { include: "issueType", pageSize: 50, page: page }
     }).then(function(res) {
       if (res.data.length) {
         issues = issues.concat(res.data);

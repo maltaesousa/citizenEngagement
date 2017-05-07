@@ -5,11 +5,13 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
   map.editMode = false;
   map.cursor = 'auto'; // changes the cursor style
   map.markers = [];
+  map.types = [];
+  map.typeFilter=  [];
+  map.filterSettings = {displayProp: 'description'}
 
   map.defaults = {
     zoomControl: false // the scroll wheel you shall use
   };
-
 
   map.center = {
     // These are the coordinates for the center of Yverdon-les-Bains
@@ -18,24 +20,35 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
     zoom: 15 // This one is actually optional
   }
 
-/**
- * Markers appearance
- */
+  /**
+   * Markers appearance
+   */
   var defaultIcon = {
     type: "vectorMarker",
     icon: "coffee",
     markerColor: "red"
   }
 
-  map.refresh = function () {
+  /**
+   * Get all the issues. It's in a function so it can be triggered
+   * after creating/modifying an issue.
+   */
+  map.getIssues = function () {
     IssuesService.getIssues().then(function(issues) {
       _.each(issues, function(issue) {
           issue.icon = defaultIcon;
         });
         map.markers = issues;
+        console.log(map.markers);
     });
   }
-  map.refresh();
+  map.getIssues();
+
+  IssuesService.getTypes().then(function(types) {
+    map.types = types;
+      console.log(map.types);
+
+  });
 
 /**
  * This switches the edit mode on or off
@@ -69,7 +82,7 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
           latlng: args.leafletEvent.latlng
         }
       }).closed.then(function() {
-        map.refresh();
+        map.getIssues();
       });
     }
   });
