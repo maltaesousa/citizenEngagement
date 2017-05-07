@@ -1,40 +1,70 @@
 <div class="modal-content">
   <div class="modal-header">
-    <button type="button" class="close" ng-click="saveCtrl.close()">
+    <button type="button" class="close" ng-click="saveCtrl.dismiss()">
       <span aria-hidden="true">×</span>
     </button>
     <h4 class="modal-title">New issue</h4>
   </div>
   <div class="modal-body">
+    <!-- The form to save the new issue data -->
     <form id="save" name="saveForm" novalidate>
-      <div class="form-group" ng-class="{'has-error' : saveForm.type.$invalid && saveForm.type.$dirty}"> <!--required-->
+      <!-- Type required-->
+      <div class="form-group" ng-class="{'has-error' : saveForm.type.$invalid && saveForm.type.$dirty}">
         <label for="type">Type</label>
-        <select class="form-control" id="type" name="type" placeholder="type" class="form-control" ng-model="issue.type" required>
-          <option ng-repeat="type in saveCtrl.types">{{ type.name }}</option>
+        <select class="form-control" id="type" name="type" placeholder="type" class="form-control"
+          ng-model="saveCtrl.issue.issueTypeHref" required>
+          <option ng-repeat="type in saveCtrl.types" ng-value="type.href">{{ type.name }}</option>
         </select>
         <p class="help-block" ng-show="saveForm.type.$invalid && saveForm.type.$dirty">
           <em ng-show="saveForm.type.$error.required">Please provide a type</em>
         </p>
       </div>
-      <div class="form-group" ng-class="{'has-error' : saveForm.description.$invalid && saveForm.description.$dirty}"> <!--1000 chars-->
+      <!-- Description max 1000 chars -->
+      <div class="form-group" ng-class="{'has-error' : saveForm.description.$invalid && saveForm.description.$dirty}">
         <label for="description">Description</label>
-        <input type="description" id="description" name="description" placeholder="Provide a simple description of the issue" class="form-control"
-          ng-model="issue.description">
+        <textarea id="description" name="description" placeholder="Provide a simple description of the issue" class="form-control"
+          ng-model="saveCtrl.issue.description" ng-maxlength="1000"></textarea>
         <p class="help-block" ng-show="saveForm.description.$invalid && saveForm.description.$dirty">
+          <em ng-show="saveForm.description.$error.maxlength">Your description is too long</em>
         </p>
       </div>
-      <div class="form-group" ng-class="{'has-error' : saveForm.image.$invalid && saveForm.image.$dirty}"> <!--url-->
+      <!-- Image url -->
+      <div class="form-group" ng-class="{'has-error' : saveForm.image.$invalid && saveForm.image.$dirty}">
         <label for="image">Image url</label>
-        <input type="image" id="image" name="image" placeholder="Paste an url of a picture depicting the issue" class="form-control"
-          ng-model="issue.image">
-        <p class="help-block" ng-show="saveForm.image.$invalid && saveForm.image.$dirty">
+        <input type="url" id="image" name="image" placeholder="Paste URL of an image" class="form-control" ng-model="saveCtrl.issue.image">
+        <p class="help-block" ng-show="saveForm.image.$invalid && saveForm.image.$dirty"></p>
+      </div>
+      <!-- Tags array-->
+      <!-- TODO: Problème d'alignement -->
+      <div class="form-group" ng-class="{'has-error' : saveForm.tag.$invalid && saveForm.tag.$dirty}">
+        <label for="tags">Tags</label>
+        <p ng-show="saveCtrl.issue.tags">
+          <!-- Track by index in ng-repeat to avoid duplicate keys error -->
+          <span class="tag label label-info" ng-repeat="tag in saveCtrl.issue.tags track by $index">
+            <span>{{ tag }}</span>
+            <a ng-click="saveCtrl.removeTag(tag)">
+              <small class="remove glyphicon glyphicon-remove glyphicon-white"></small>
+            </a>
+          </span>
         </p>
+        <!-- Tag max 20 chars. Button disabled when pristine. -->
+        <div class="input-group">
+          <input type="text" id="tag" name="tag" placeholder="Add a tag" class="form-control" ng-model="saveCtrl.tag" ng-maxlength="20">
+          <div class="input-group-addon">
+            <!-- Set pristine to avoid empty tags.-->
+            <button class="btn btn-sm btn-default" ng-disabled="saveForm.tag.$invalid || saveForm.tag.$pristine"
+             ng-click="saveCtrl.addTag(); saveForm.tag.$setPristine()">
+              <span class="glyphicon glyphicon-plus"></span>
+              Add tag
+            </button>
+          </div>
+        </div>
+        <p class="help-block" ng-show="saveForm.tag.$invalid && saveForm.tag.$dirty">Your tag is too long</p>
       </div>
     </form>
-    Here goes the content. {{ saveCtrl.latlng.lat }} {{ saveCtrl.latlng.lng }}
   </div>
   <div class="modal-footer">
-    <button class="btn btn-default" ng-click="saveCtrl.close()">Close</button>
-    <button class="btn btn-primary">Save changes</button>
+    <button class="btn btn-default" ng-click="saveCtrl.dismiss()">Cancel</button>
+    <button class="btn btn-primary" ng-disabled="saveForm.$invalid" ng-click="saveCtrl.submit()">Save</button>
   </div>
 </div>

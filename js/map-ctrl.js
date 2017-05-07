@@ -27,14 +27,15 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
     markerColor: "red"
   }
 
-  IssuesService.getIssues().then(function(issues) {
-    _.each(issues, function(issue) {
-        issue.icon = defaultIcon;
-      });
-      map.markers = issues;
-  });
-
-
+  map.refresh = function () {
+    IssuesService.getIssues().then(function(issues) {
+      _.each(issues, function(issue) {
+          issue.icon = defaultIcon;
+        });
+        map.markers = issues;
+    });
+  }
+  map.refresh();
 
 /**
  * This switches the edit mode on or off
@@ -50,11 +51,15 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
   }
 
 /**
- * What happens when user clicks on canvas
+ * What happens when user clicks on canvas.
+ * 
+ * Throws a "Possibly unhandled rejection" I don't know why.
+ * But when I was trying to find out why, I stumbled upon a funny comment
+ * so here's the link: https://github.com/angular-ui/bootstrap/issues/6412
+ * (last comment) :)
  */
   $scope.$on('leafletDirectiveMap.click', function(event, args) {
     if (map.editMode) {
-      console.log(args.leafletEvent.latlng);
       map.toggleEditMode();
       $uibModal.open({
         templateUrl: "templates/savemodal.html",
@@ -63,6 +68,8 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
         resolve: {
           latlng: args.leafletEvent.latlng
         }
+      }).closed.then(function() {
+        map.refresh();
       });
     }
   });

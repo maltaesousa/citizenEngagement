@@ -13,8 +13,7 @@
     <div class="list-group">
       <a class="list-group-item" ng-repeat="issue in map.markers">
         <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
-        <h4 class="list-group-item-heading">{{ issue.issueType.description }}</h4>
-        <span class="badge">{{ issue.state }}</span>
+        <h4 class="list-group-item-heading">{{ issue.issueType.description }} <span class="badge">{{ issue.state }}</span></h4>
         <p class="list-group-item-text">{{ issue.description }}</p>
       </a>
     </div>

@@ -1,3 +1,27 @@
+/**
+ * tags in modal styling
+ */
+.tag.label {
+  margin-right: 0.3em;
+  padding-right: 0.2em;
+}
+
+.tag a {
+  color: #fff;
+  opacity: 0.5;
+}
+
+.tag a:hover {
+  opacity: 1.0
+}
+
+.tag .remove {
+  padding-right: 0;
+}
+
+/**
+ * Styling left-panel
+ */
 section.col-md-4 {
   height: 100vh;
   overflow-y: auto;

@@ -4,7 +4,12 @@ angular.module('app').factory('IssuesService', function($http) {
  */
   var service = {};
 
-  service.getIssues = function() {
+  /**
+   * Get all the issues formatting coordinates to be handled
+   * in leaflet.
+   */
+  service.getIssues = function(cache) {
+    cache = cache || true;
     return fetchAllIssues().then(function(issues) {
       _.each(issues, function(issue) {
         issue.lat = issue.location.coordinates[1];
@@ -19,11 +24,23 @@ angular.module('app').factory('IssuesService', function($http) {
     });
   };
 
+  service.setIssue = function(issue) {
+    issue.createdAt = moment().format();
+    return saveIssue(issue);
+  }
+
   service.getTypes = function() {
     return loadTypes().then(function(types) {
       return types });
   };
 
+  /**
+   * Fetch all issues
+   * 
+   * @param {boolean} cache if true, cache enabled
+   * @param {int} page current page being fetched
+   * @param {Object} issues list of issues
+   */
   function fetchAllIssues(page, issues) {
     page = page || 1;
     issues = issues || [];
@@ -53,6 +70,17 @@ angular.module('app').factory('IssuesService', function($http) {
     }
 
     return typesPromise;
+  }
+
+  function saveIssue(issue) {
+    console.log(issue);
+    return $http({
+      method: "POST",
+      url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
+      data: issue
+    }).then(function (res) {
+      return res.data;
+    });
   }
 
   return service;

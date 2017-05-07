@@ -44,8 +44,6 @@ angular.module('app').controller('LoginCtrl', function (AuthService, $http, $sta
         }
       }
       login.alert.error = true;
-      console.log(error);
-      console.log(login.alert);
     });
   };
 });
