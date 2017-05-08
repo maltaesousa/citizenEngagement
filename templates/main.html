@@ -10,10 +10,6 @@
   </section>
 
   <section class="col-md-4">
-    <!--
-      <div ng-dropdown-multiselect="" options="map.types" selected-model="map.typeFilter" extra-settings="map.filterSettings"></div> <span>{{ map.typeFilter.href }}</span>
--->
-
     <div class="list-group">
       <form class="form-inline list-group-item" id="searchForm" name="searchForm" novalidate>
         <div class="form-group">
@@ -21,7 +17,7 @@
           <input type="text" class="form-control" id="searchText" name="searchText" placeholder="quick search" ng-model="searchText">
         </div>
         <div class="pull-right">
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" ng-click="map.filterOpen()">
         <span class="glyphicon glyphicon-cog"></span>
       </button>
         </div>

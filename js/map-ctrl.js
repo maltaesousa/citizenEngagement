@@ -1,13 +1,11 @@
 angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geolocation, $uibModal) {
-  var MapCtrl = this;
-
   var map = this;
   map.editMode = false;
   map.cursor = 'auto'; // changes the cursor style
   map.markers = [];
   map.types = [];
   map.typeFilter=  [];
-  map.filterSettings = {displayProp: 'description'}
+  map.filterSettings = {displayProp: 'description'};
 
   map.defaults = {
     zoomControl: false // the scroll wheel you shall use
@@ -39,16 +37,25 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
           issue.icon = defaultIcon;
         });
         map.markers = issues;
-        console.log(map.markers);
     });
   }
   map.getIssues();
+/**
+ *  IssuesService.getTypes().then(function(types) {
+ *    map.types = types;
+ *      console.log(map.types);
+ *  });
+ */
 
-  IssuesService.getTypes().then(function(types) {
-    map.types = types;
-      console.log(map.types);
-
-  });
+  map.filterOpen = function() {
+    $uibModal.open({
+      templateUrl: "templates/filtermodal.html",
+      controller: "FilterCtrl",
+      controllerAs: "filterCtrl",
+    }).closed.then(function() {
+      map.getIssues();
+    });
+  };
 
 /**
  * This switches the edit mode on or off
@@ -66,10 +73,11 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
 /**
  * What happens when user clicks on canvas.
  * 
- * Throws a "Possibly unhandled rejection" I don't know why.
+ * Throws a "Possibly unhandled rejection"because of dismiss() in ctontroller.
+ * I don't know why.
  * But when I was trying to find out why, I stumbled upon a funny comment
  * so here's the link: https://github.com/angular-ui/bootstrap/issues/6412
- * (last comment) :)
+ * (last comment) I hope this can excuse the thrown error? :)
  */
   $scope.$on('leafletDirectiveMap.click', function(event, args) {
     if (map.editMode) {
