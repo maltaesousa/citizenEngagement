@@ -9,7 +9,20 @@ angular.module('app').factory('IssuesService', function($http) {
     include: "issueType",
     pageSize: 50
   };
-  var filter = {};
+
+  service.filter = {
+    "issueType.name" : {
+      "$in": ["broken-streetlight"]
+    }
+  };
+
+  /*
+  FONCTIONNE
+  service.filter = {
+    state: {
+      $in: ["new"]
+    }
+  };*/
 
   var formatCoord = function(issue) {
     issue.lat = issue.location.coordinates[1];
@@ -21,7 +34,7 @@ angular.module('app').factory('IssuesService', function($http) {
    */
   service.getIssues = function() {
     var issuesPromise;
-    if (_.isEmpty(filter)) {
+    if (_.isEmpty(service.filter)) {
       issuesPromise = fetchAllIssues();
     } else {
       issuesPromise = fetchFilteredIssues();
@@ -41,7 +54,7 @@ angular.module('app').factory('IssuesService', function($http) {
    * Adds issues parameters to default ones
    */
   service.setFilter = function(filter) {
-    console.log(filter);
+    service.filter = filter;
   }
 
   service.setIssue = function(issue) {
@@ -71,8 +84,28 @@ angular.module('app').factory('IssuesService', function($http) {
     });
   }
 
+  function fetchFilteredIssues(page, issues) {
+    page = page || 1;
+    issues = issues || [];
+    return $http({
+      method: "POST",
+      url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues/searches',
+      params: angular.extend(defaults, { page: page }),
+      data: service.filter
+    }).then(function(res) {
+      if (res.data.length) {
+        issues = issues.concat(res.data);
+        return fetchAllIssues(page + 1, issues);
+      }
+      console.log(service.filter);
+      console.log(issues);
+      return issues;
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
   function saveIssue(issue) {
-    console.log(issue);
     return $http({
       method: "POST",
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',

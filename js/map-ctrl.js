@@ -35,9 +35,11 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
           issue.icon = defaultIcon;
         });
         map.markers = issues;
+        console.log(map.markers);
     });
   }
   map.getIssues();
+  
 
   map.filterOpen = function() {
     $uibModal.open({

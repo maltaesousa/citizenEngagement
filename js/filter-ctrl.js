@@ -2,20 +2,25 @@ angular.module('app').controller('FilterCtrl', function($scope, TypesService, Is
   var filterCtrl = this;
   filterCtrl.types = [];
   filterCtrl.selected = {
-    types: [] //selected types
+    types: []
   };
+
   filterCtrl.typesSettings = {displayProp: 'description'};
 
   filterCtrl.dismiss = $uibModalInstance.dismiss;
 
   TypesService.getTypes().then(function(types) {
-      filterCtrl.types = types;
-      console.log(filterCtrl.types);
+    filterCtrl.types = types;
   });
 
   filterCtrl.submit = function() {
-    IssuesService.setParams(saveCtrl.issue).then(function() {
-      $uibModalInstance.close();
-    });
+    var query = {
+      type: {
+        $in: _.map(filterCtrl.selected.types, 'name')
+      }
+    }
+    console.log(query);
+    IssuesService.setFilter(query);
+    $uibModalInstance.close();
   }
 });
