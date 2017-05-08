@@ -19,9 +19,11 @@ angular.module('app').controller('SaveCtrl', function(latlng, $uibModalInstance,
 
   /**
    * Creates an array or push to existing array of tags
+   * No duplicates allowed
    */
   saveCtrl.addTag = function() {
     (saveCtrl.issue.tags = saveCtrl.issue.tags || []).push(saveCtrl.tag);
+    saveCtrl.issue.tags = _.uniq(saveCtrl.issue.tags);
     saveCtrl.tag = "";
   }
   
@@ -29,8 +31,7 @@ angular.module('app').controller('SaveCtrl', function(latlng, $uibModalInstance,
    * Removes a specific tag from the array
    */
   saveCtrl.removeTag = function(tag) {
-    var index = saveCtrl.issue.tags.indexOf(tag);
-    saveCtrl.issue.tags.splice(index, 1);
+    _.pull(saveCtrl.issue.tags, tag);
   }
 
   /**

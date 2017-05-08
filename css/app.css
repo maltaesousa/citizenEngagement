@@ -2,6 +2,7 @@
  * tags in modal styling
  */
 .tag.label {
+  display: inline-block;
   margin-right: 0.3em;
   padding-right: 0.2em;
 }
