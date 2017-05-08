@@ -1,4 +1,4 @@
-angular.module('app').controller('FilterCtrl', function($scope, IssuesService, $uibModalInstance) {
+angular.module('app').controller('FilterCtrl', function($scope, TypesService, $uibModalInstance) {
   var filterCtrl = this;
   filterCtrl.types = [];
   filterCtrl.selectedTypes = [];
@@ -6,7 +6,7 @@ angular.module('app').controller('FilterCtrl', function($scope, IssuesService, $
 
   filterCtrl.dismiss = $uibModalInstance.dismiss;
 
-  IssuesService.getTypes().then(function(types) {
+  TypesService.getTypes().then(function(types) {
       filterCtrl.types = types;
       console.log(filterCtrl.types);
   });

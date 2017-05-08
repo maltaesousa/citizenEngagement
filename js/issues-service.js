@@ -1,7 +1,8 @@
-angular.module('app').factory('IssuesService', function($http) {
 /**
  * This service provides access to issues
  */
+angular.module('app').factory('IssuesService', function($http) {
+
   var service = {};
 
   /**
@@ -29,15 +30,9 @@ angular.module('app').factory('IssuesService', function($http) {
     return saveIssue(issue);
   }
 
-  service.getTypes = function() {
-    return loadTypes().then(function(types) {
-      return types });
-  };
-
   /**
    * Fetch all issues
    * 
-   * @param {boolean} cache if true, cache enabled
    * @param {int} page current page being fetched
    * @param {Object} issues list of issues
    */
@@ -55,21 +50,6 @@ angular.module('app').factory('IssuesService', function($http) {
       }
       return issues;
     });
-  }
-
-  var typesPromise
-  function loadTypes() {
-    if (!typesPromise) {
-      typesPromise = $http({
-        method: "GET",
-        url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issueTypes',
-        params: {}
-      }).then(function(res) {
-        return res.data;
-      });
-    }
-
-    return typesPromise;
   }
 
   function saveIssue(issue) {

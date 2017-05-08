@@ -40,12 +40,6 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
     });
   }
   map.getIssues();
-/**
- *  IssuesService.getTypes().then(function(types) {
- *    map.types = types;
- *      console.log(map.types);
- *  });
- */
 
   map.filterOpen = function() {
     $uibModal.open({

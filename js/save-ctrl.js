@@ -1,4 +1,4 @@
-angular.module('app').controller('SaveCtrl', function(latlng, $uibModalInstance, IssuesService) {
+angular.module('app').controller('SaveCtrl', function(latlng, $uibModalInstance, IssuesService, TypesService) {
   var saveCtrl = this;
   saveCtrl.dismiss = $uibModalInstance.dismiss;
   saveCtrl.types = []; // Types of issues to feed the combobox
@@ -13,7 +13,7 @@ angular.module('app').controller('SaveCtrl', function(latlng, $uibModalInstance,
   /**
    * Get the existing types into the combobox
    */
-  IssuesService.getTypes().then(function(types) {
+  TypesService.getTypes().then(function(types) {
       saveCtrl.types = types;
   });
 
