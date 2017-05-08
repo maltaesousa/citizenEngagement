@@ -1,8 +1,10 @@
-angular.module('app').controller('FilterCtrl', function($scope, TypesService, $uibModalInstance) {
+angular.module('app').controller('FilterCtrl', function($scope, TypesService, IssuesService, $uibModalInstance) {
   var filterCtrl = this;
   filterCtrl.types = [];
-  filterCtrl.selectedTypes = [];
-  filterCtrl.filterSettings = {displayProp: 'description'};
+  filterCtrl.selected = {
+    types: [] //selected types
+  };
+  filterCtrl.typesSettings = {displayProp: 'description'};
 
   filterCtrl.dismiss = $uibModalInstance.dismiss;
 
@@ -11,4 +13,9 @@ angular.module('app').controller('FilterCtrl', function($scope, TypesService, $u
       console.log(filterCtrl.types);
   });
 
+  filterCtrl.submit = function() {
+    IssuesService.setParams(saveCtrl.issue).then(function() {
+      $uibModalInstance.close();
+    });
+  }
 });

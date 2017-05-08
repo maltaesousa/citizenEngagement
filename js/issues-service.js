@@ -4,18 +4,30 @@
 angular.module('app').factory('IssuesService', function($http) {
 
   var service = {};
+  // default parameters to get issues
+  var defaults = {
+    include: "issueType",
+    pageSize: 50
+  };
+  var filter = {};
+
+  var formatCoord = function(issue) {
+    issue.lat = issue.location.coordinates[1];
+    issue.lng = issue.location.coordinates[0];
+  };
 
   /**
-   * Get all the issues formatting coordinates to be handled
-   * in leaflet.
+   * Gets issues depending on there's a filter or not.
    */
-  service.getIssues = function(cache) {
-    cache = cache || true;
-    return fetchAllIssues().then(function(issues) {
-      _.each(issues, function(issue) {
-        issue.lat = issue.location.coordinates[1];
-        issue.lng = issue.location.coordinates[0];
-      });
+  service.getIssues = function() {
+    var issuesPromise;
+    if (_.isEmpty(filter)) {
+      issuesPromise = fetchAllIssues();
+    } else {
+      issuesPromise = fetchFilteredIssues();
+    }
+    return issuesPromise.then(function(issues) {
+      _.each(issues, formatCoord);
       return issues });
   };
 
@@ -24,6 +36,13 @@ angular.module('app').factory('IssuesService', function($http) {
       return _.find(issues, { id: issueId });
     });
   };
+
+  /**
+   * Adds issues parameters to default ones
+   */
+  service.setFilter = function(filter) {
+    console.log(filter);
+  }
 
   service.setIssue = function(issue) {
     issue.createdAt = moment().format();
@@ -42,7 +61,7 @@ angular.module('app').factory('IssuesService', function($http) {
     return $http({
       method: "GET",
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/issues',
-      params: { include: "issueType", pageSize: 50, page: page }
+      params: angular.extend(defaults, { page: page })
     }).then(function(res) {
       if (res.data.length) {
         issues = issues.concat(res.data);

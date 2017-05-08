@@ -1,11 +1,9 @@
 angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geolocation, $uibModal) {
   var map = this;
-  map.editMode = false;
-  map.cursor = 'auto'; // changes the cursor style
-  map.markers = [];
-  map.types = [];
-  map.typeFilter=  [];
-  map.filterSettings = {displayProp: 'description'};
+  map.editMode = false; // Does the user want to add a point ?
+  map.cursor = 'auto'; // handles cursor style
+  map.markers = []; // markers shown on map
+  issuesParams = {}; // handles params passed to http get
 
   map.defaults = {
     zoomControl: false // the scroll wheel you shall use
