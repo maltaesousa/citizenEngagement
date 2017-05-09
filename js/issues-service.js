@@ -10,20 +10,6 @@ angular.module('app').factory('IssuesService', function($http) {
     pageSize: 50
   };
 
-  service.filter = {
-    "issueType.name" : {
-      "$in": ["broken-streetlight"]
-    }
-  };
-
-  /*
-  FONCTIONNE
-  service.filter = {
-    state: {
-      $in: ["new"]
-    }
-  };*/
-
   var formatCoord = function(issue) {
     issue.lat = issue.location.coordinates[1];
     issue.lng = issue.location.coordinates[0];
