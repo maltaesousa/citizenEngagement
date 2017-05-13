@@ -23,16 +23,22 @@
         </div>
       </form>
       <uib-accordion>
-        <a class="list-group-item" ng-repeat="issue in map.markers">
-          <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
-          <h4 class="list-group-item-heading">{{ issue.issueType.description }}</h4>
-          <p class="list-group-item-text">{{ issue.description }} <span class="pull-right badge">{{ issue.state }}</span></p>
-        </a>
+        <div uib-accordion-group ng-repeat="issue in map.markers">
+          <uib-accordion-heading>
+            <a sref="home.issues({ issueID: issues.id })" class="list-group-item">
+              <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+              <h4 class="list-group-item-heading">{{ issue.issueType.description }}</h4>
+              <p class="list-group-item-text">{{ issue.description }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+              <span class="badge">{{ issue.state }}</span></p>
+            </a>
+          </uib-accordion-heading>
+          <div ui-view />
+        </div>
       </uib-accordion>
     </div>
   </section>
-     <div class="pull-top-right">
-      <button class="btn btn-default btn-circle btn-lg" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">
+  <div class="pull-top-right">
+    <button class="btn btn-default btn-circle btn-lg" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">
         <span class="fa fa-sign-out"></span>
       </button>
   </div>

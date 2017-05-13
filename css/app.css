@@ -23,6 +23,14 @@
 /**
  * Styling left-panel
  */
+.panel-group .panel + .panel{
+  margin-top: 0;
+}
+
+div.panel-heading {
+  padding: 0;
+}
+
 section.col-md-4 {
   height: 100vh;
   overflow-y: auto;
