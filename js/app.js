@@ -21,9 +21,9 @@ angular.module('app').config(function ($locationProvider, $stateProvider,
         controller: 'LoginCtrl as login'
     });
 
-    $stateProvider.state('second', {
-        url: '/second',
-        templateUrl: './templates/second.html'
+    $stateProvider.state('admin', {
+        url: '/admin',
+        templateUrl: './templates/admin.html'
     });
 
     $urlRouterProvider.otherwise(function($injector) {

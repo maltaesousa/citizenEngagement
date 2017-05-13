@@ -1,8 +1,9 @@
-angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geolocation, $uibModal) {
+angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesService, $geolocation, $uibModal) {
   var map = this;
   map.editMode = false; // Does the user want to add a point ?
   map.cursor = 'auto'; // handles cursor style
   map.markers = []; // markers shown on map
+  map.issues = []; // data
   issuesParams = {}; // handles params passed to http get
 
   map.defaults = {
@@ -34,8 +35,9 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
       _.each(issues, function(issue) {
           issue.icon = defaultIcon;
         });
+        map.issues = issues;
+        console.log(map.issues);
         map.markers = issues;
-        console.log(map.markers);
     });
   }
   map.getIssues();
@@ -50,7 +52,18 @@ angular.module('app').controller('MapCtrl', function($scope, IssuesService, $geo
       map.getIssues();
     });
   };
-
+  /**
+   * I wanted to filter directly map.markers with pipeline filter in html
+   * But it threw a lot of errors although it worked.
+   * This solution, found on stackoverflow is a cleaner workaround
+   */
+  $scope.$watch("map.searchText", function(newVal) {
+    if (newVal !== '') {
+      map.markers = $filter('filter')(map.issues, {'description': newVal});
+    } else {
+      map.markers = map.issues;
+    }
+  });
 /**
  * This switches the edit mode on or off
  */
