@@ -52,10 +52,10 @@
         <div class="form-group" ng-class="{'has-error' : signupForm.username.$invalid && signupForm.username.$dirty}">
           <label for="username" class="sr-only">Username</label>
           <input type="text" id="username" name="username" placeholder="Username" class="form-control" ng-model="login.newuser.name"
-            required ng-maxlength="25" ng-pattern="/^[a-zA-Z0-9]+/">
+            required ng-maxlength="25" ng-pattern="/^[a-zA-Z0-9]+$/">
           <p class="help-block" ng-show="signupForm.username.$invalid && signupForm.username.$dirty">
-            <em ng-show="signupForm.username.$error.required">Please provide your username</em>
-            <em ng-show="signupForm.username.$error.maxlength">Too long...</em>
+              <em ng-show="signupForm.username.$error.required">Please provide your username</em>
+              <em ng-show="signupForm.username.$error.maxlength">Too long...</em>
             <em ng-show="signupForm.username.$error.pattern">Trump made special characters illegal</em>
           </p>
         </div>
