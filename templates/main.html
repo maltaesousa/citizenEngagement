@@ -22,11 +22,13 @@
       </button>
         </div>
       </form>
-      <a class="list-group-item" ng-repeat="issue in map.markers">
-        <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
-        <h4 class="list-group-item-heading">{{ issue.issueType.description }}</h4>
-        <p class="list-group-item-text">{{ issue.description }} <span class="pull-right badge">{{ issue.state }}</span></p>
-      </a>
+      <uib-accordion>
+        <a class="list-group-item" ng-repeat="issue in map.markers">
+          <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+          <h4 class="list-group-item-heading">{{ issue.issueType.description }}</h4>
+          <p class="list-group-item-text">{{ issue.description }} <span class="pull-right badge">{{ issue.state }}</span></p>
+        </a>
+      </uib-accordion>
     </div>
   </section>
      <div class="pull-top-right">

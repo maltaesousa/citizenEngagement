@@ -15,6 +15,13 @@ angular.module('app').config(function ($locationProvider, $stateProvider,
         templateUrl: './templates/main.html'
     });
 
+    $stateProvider.state('home.issues', {
+      url: '/:id',
+      controller: 'issueCtrl ',
+      controllerAs: 'issueCtrl',
+      templateUrl: '/templates/issue.html'
+    });
+
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: './templates/login.html',
