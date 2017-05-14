@@ -31,6 +31,12 @@ div.panel-heading {
   padding: 0;
 }
 
+.list-group-item a:hover,
+.list-group-item a:focus {
+  text-decoration: none;
+  outline: 0;
+}
+
 section.col-md-4 {
   height: 100vh;
   overflow-y: auto;
