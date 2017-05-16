@@ -11,14 +11,13 @@ angular.module('app').config(function ($locationProvider, $stateProvider,
     $httpProvider.interceptors.push('AuthInterceptor');
     $stateProvider
     .state('home', {
-        url: '/',
+        url: '/issues',
         templateUrl: './templates/main.html'
     });
 
     $stateProvider.state('home.issues', {
       url: '/:id',
-      controller: 'issueCtrl ',
-      controllerAs: 'issueCtrl',
+      controller: 'IssueCtrl as issueCtrl',
       templateUrl: '/templates/issue.html'
     });
 

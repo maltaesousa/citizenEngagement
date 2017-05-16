@@ -23,8 +23,11 @@
 /**
  * Styling left-panel
  */
-.panel-group .panel + .panel{
+.panel-group .panel.list-group-item{
   margin-top: 0;
+  box-shadow: none;
+  border-top: 1px solid #ddd;
+  border-radius: 0;
 }
 
 div.panel-heading {

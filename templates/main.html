@@ -22,14 +22,13 @@
           </button>
         </div>
       </form>
-      <uib-accordion>
-        <div uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item">
+      <uib-accordion ui-sref-active="active">
+        <div uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
           <uib-accordion-heading>
-            <a ui-sref="home.issues({ issueId: issue.id })">
-              <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
-              <h4 class="list-group-item-heading">{{ issue.issueType.description }}</h4>
-              <p class="list-group-item-text">{{ issue.description }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-              <span class="badge">{{ issue.state }}</span></p>
+            <a ui-sref="home.issues({ id: issue.id })">
+              <h5 class="list-group-item-heading">{{ issue.issueType.description }} <span class="badge">{{ issue.state }}</span>
+              <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+              </h5>
             </a>
           </uib-accordion-heading>
           <div ui-view />

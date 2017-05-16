@@ -83,11 +83,9 @@ angular.module('app').factory('IssuesService', function($http) {
         issues = issues.concat(res.data);
         return fetchAllIssues(page + 1, issues);
       }
-      console.log(service.filter);
-      console.log(issues);
       return issues;
     }).catch(function (error) {
-      console.log(error);
+      /** TODO: Handle error */
     });
   }
 

@@ -1,10 +1,9 @@
-angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesService, $geolocation, $uibModal) {
+angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope) {
   var map = this;
-  map.editMode = false; // Does the user want to add a point ?
-  map.cursor = 'auto'; // handles cursor style
   map.markers = []; // markers shown on map
   map.issues = []; // data
-  issuesParams = {}; // handles params passed to http get
+  map.editMode = false; // Does the user want to add a point ?
+  map.cursor = 'auto'; // handles cursor style
 
   map.defaults = {
     zoomControl: false // the scroll wheel you shall use
@@ -104,6 +103,10 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
 
   $scope.$on('leafletDirectiveMap.blur', function(event) {
     map.toggleEditMode();
+  });
+
+  $rootScope.$on('stateChangeSuccess', function () {
+    console.log("fired");
   });
 
   $geolocation.getCurrentPosition()

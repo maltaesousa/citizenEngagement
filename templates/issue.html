@@ -1,3 +1,6 @@
 <div>
-  Coucou
+  <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+  <p>
+    {{ issue.description }}
+  </p>
 </div>
