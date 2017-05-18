@@ -105,8 +105,7 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
     map.toggleEditMode();
   });
 
-  $rootScope.$on('$stateChangeSuccess', function () {
-    console.log($stateParams.id);
+  $rootScope.$on('$viewContentLoaded', function () {
     issue = _.find(map.markers, {id: $stateParams.id});
     map.center = {
       lat: issue.lat,
