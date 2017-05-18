@@ -1,44 +1,43 @@
-<div ng-controller="MapCtrl as map">
+<div class="" ng-controller="MapCtrl as map">
 
-  <section>
-    <div id="map-canvas">
-      <leaflet defaults="map.defaults" markers="map.markers" width="100vw" height="100vh" lf-center="map.center" ng-style="{'cursor' : map.cursor}"></leaflet>
-    </div>
-    <button class="btn btn-success btn-circle btn-xl pull-bottom-right" ng-click="map.toggleEditMode(true)" ng-class="{ 'active': map.editMode }">
-    <i class="glyphicon glyphicon-map-marker"></i>
-  </button>
-  </section>
-
-  <section class="col-md-4">
-    <div class="list-group">
-      <form class="form-inline list-group-item" id="searchForm" name="searchForm" novalidate>
-        <div class="form-group">
-          <label for="searchText" class="sr-only">Search query</label>
-          <input type="text" class="form-control" id="searchText" name="map.searchText" placeholder="quick search" ng-model="map.searchText">
-        </div>
-        <div class="pull-right">
-          <button type="button" class="btn btn-primary" ng-click="map.filterOpen()">
+    <section id="left-panel" class="col-md-3">
+      <div class="list-group">
+        <form class="form-inline list-group-item" id="searchForm" name="searchForm" novalidate>
+          <div class="form-group">
+            <label for="searchText" class="sr-only">Search query</label>
+            <input type="text" class="form-control" id="searchText" name="map.searchText" placeholder="quick search" ng-model="map.searchText">
+          </div>
+          <div class="pull-right">
+            <button type="button" class="btn btn-primary" ng-click="map.filterOpen()">
             <span class="glyphicon glyphicon-cog"></span>
           </button>
-        </div>
-      </form>
-      <uib-accordion ui-sref-active="active">
-        <div uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
-          <uib-accordion-heading>
-            <a ui-sref="home.issues({ id: issue.id })">
-              <h5 class="list-group-item-heading">{{ issue.issueType.description }} <span class="badge">{{ issue.state }}</span>
-              <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-              </h5>
-            </a>
-          </uib-accordion-heading>
-          <div ui-view />
-        </div>
-      </uib-accordion>
-    </div>
-  </section>
-  <div class="pull-top-right">
-    <button class="btn btn-default btn-circle btn-lg" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">
+          </div>
+        </form>
+        <uib-accordion ui-sref-active="active">
+          <div uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
+            <uib-accordion-heading>
+              <a ui-sref="home.issues({ id: issue.id })">
+                <h5 class="list-group-item-heading">{{ issue.issueType.description }} <span class="badge">{{ issue.state }}</span>
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                </h5>
+              </a>
+            </uib-accordion-heading>
+            <div ui-view />
+          </div>
+        </uib-accordion>
+      </div>
+    </section>
+    <section id="map-panel" class="col-md-9 no-padding">
+      <div id="map-canvas">
+        <leaflet defaults="map.defaults" markers="map.markers" width="100%" height="100vh" lf-center="map.center" ng-style="{'cursor' : map.cursor}"></leaflet>
+      </div>
+      <button class="btn btn-success btn-circle btn-xl pull-bottom-right" ng-click="map.toggleEditMode(true)" ng-class="{ 'active': map.editMode }">
+      <i class="glyphicon glyphicon-map-marker"></i>
+    </button>
+    </section>
+    <div class="pull-top-right">
+      <button class="btn btn-default btn-circle btn-lg" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">
         <span class="fa fa-sign-out"></span>
       </button>
-  </div>
+    </div>
 </div>
