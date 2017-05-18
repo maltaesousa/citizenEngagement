@@ -105,8 +105,14 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
     map.toggleEditMode();
   });
 
-  $rootScope.$on('stateChangeSuccess', function () {
-    console.log("fired");
+  $rootScope.$on('$stateChangeSuccess', function () {
+    console.log($stateParams.id);
+    issue = _.find(map.markers, {id: $stateParams.id});
+    map.center = {
+      lat: issue.lat,
+      lng: issue.lng,
+      zoom: 18
+    }
   });
 
   $geolocation.getCurrentPosition()
