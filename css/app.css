@@ -23,7 +23,16 @@
 /**
  * Styling left-panel
  */
-.panel-group .panel.list-group-item{
+div.panel.panel-open .panel-body {
+  padding: 1em 0;
+}
+
+
+h5.list-group-item-heading {
+  margin-bottom: inherit;
+}
+
+.panel-group .panel.list-group-item {
   margin-top: 0;
   box-shadow: none;
   border-top: 1px solid #ddd;

@@ -7,7 +7,6 @@ angular.module('app').factory('TypesService', function($http) {
 
   service.getTypes = function() {
     return fetchAllTypes().then(function(types) {
-      console.log(types);
       return types;
     });
   };

@@ -7413,7 +7413,7 @@ angular.module("uib/template/accordion/accordion-group.html", []).run(["$templat
     "  </h4>\n" +
     "</div>\n" +
     "<div id=\"{{::panelId}}\" aria-labelledby=\"{{::headingId}}\" aria-hidden=\"{{!isOpen}}\" role=\"tabpanel\" class=\"panel-collapse collapse\" uib-collapse=\"!isOpen\">\n" +
-    "  <div class=\"panel-body\" ng-transclude></div>\n" +
+    "  <div ng-transclude></div>\n" +
     "</div>\n" +
     "");
 }]);

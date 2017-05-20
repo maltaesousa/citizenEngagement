@@ -3,4 +3,5 @@
   <p>
     {{ issue.description }}
   </p>
+  <div ng-repeat="comment in issueCtrl.comments" class="well well-sm">{{ comment.text }}</div>
 </div>

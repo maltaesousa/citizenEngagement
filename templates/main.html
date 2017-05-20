@@ -22,7 +22,10 @@
                 </h5>
               </a>
             </uib-accordion-heading>
-            <div ui-view />
+            <div ng-if="status.open" class="accordion-body">
+            <!-- The ng-if ensures that the template is not copied in all the other closed accordions -->
+              <div ui-view />
+            </div>
           </div>
         </uib-accordion>
       </div>

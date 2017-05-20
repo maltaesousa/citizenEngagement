@@ -1,4 +1,5 @@
-angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope) {
+angular.module('app').controller('MapCtrl', function(
+  $scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope) {
   var map = this;
   map.markers = []; // markers shown on map
   map.issues = []; // data
@@ -11,8 +12,8 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
 
   map.center = {
     // These are the coordinates for the center of Yverdon-les-Bains
-    lat: 46.778474,
-    lng: 6.63,
+    lat: 46.778,
+    lng: 6.641,
     zoom: 15 // This one is actually optional
   }
 
@@ -26,8 +27,8 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
   }
 
   /**
-   * Get all the issues. It's in a function so it can be triggered
-   * after creating/modifying an issue.
+   * Get all the issues. It's in a function so it can be called
+   * after creating/modifying an issue to refresh view.
    */
   map.getIssues = function () {
     IssuesService.getIssues().then(function(issues) {
@@ -35,8 +36,8 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
           issue.icon = defaultIcon;
         });
         map.issues = issues;
-        console.log(map.issues);
         map.markers = issues;
+        console.log('appelé');
     });
   }
   map.getIssues();
@@ -78,12 +79,6 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
 
 /**
  * What happens when user clicks on canvas.
- * 
- * Throws a "Possibly unhandled rejection"because of dismiss() in ctontroller.
- * I don't know why.
- * But when I was trying to find out why, I stumbled upon a funny comment
- * so here's the link: https://github.com/angular-ui/bootstrap/issues/6412
- * (last comment) I hope this can excuse the thrown error? :)
  */
   $scope.$on('leafletDirectiveMap.click', function(event, args) {
     if (map.editMode) {
@@ -95,8 +90,15 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
         resolve: {
           latlng: args.leafletEvent.latlng
         }
-      }).closed.then(function() {
+      }).result.then(function() {
         map.getIssues();
+      }, function() {
+        /**
+         * Need to do something when modal is dismissed otherwise an error is shown
+         * see here: https://github.com/angular-ui/bootstrap/issues/6412
+         * (last comment is funny)
+         */
+        console.log('Modal dismissed');
       });
     }
   });
@@ -105,12 +107,30 @@ angular.module('app').controller('MapCtrl', function($scope, $filter, IssuesServ
     map.toggleEditMode();
   });
 
-  $rootScope.$on('$viewContentLoaded', function () {
-    issue = _.find(map.markers, {id: $stateParams.id});
-    map.center = {
-      lat: issue.lat,
-      lng: issue.lng,
-      zoom: 18
+  $scope.$on('leafletDirectiveMarker.click', function(event, args) {
+    console.log(args);
+  });
+
+  /**
+   * Zoom to marker with id provided in the state
+   * 
+   * C'est pas très beau, c'est appelé autant de fois qu'il y a de markers.
+   * Apparemment, a chaque marker ajouté = un content loaded. Il faudrait que
+   * le chargement du state se comporte comme une promesse et qu'une fois tous les
+   * markers ajoutés, on fasse le zoom.
+   * 
+   * J'ai vu que cette manière de faire avec les event est dépréciée et qu'une nouvelle
+   * approche existe à l'aide de "Transtions hooks". Je n'ai malheureusement pas 
+   * le temps de le tester
+   */
+  $scope.$on('$viewContentLoaded', function () {
+    if ($stateParams.id) {
+      issue = _.find(map.markers, {id: $stateParams.id});
+      map.center = {
+        lat: issue.lat,
+        lng: issue.lng,
+        zoom: 18
+      }
     }
   });
 

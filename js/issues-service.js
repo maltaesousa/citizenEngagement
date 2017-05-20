@@ -50,9 +50,6 @@ angular.module('app').factory('IssuesService', function($http) {
 
   /**
    * Fetch all issues
-   * 
-   * @param {int} page current page being fetched
-   * @param {Object} issues list of issues
    */
   function fetchAllIssues(page, issues) {
     page = page || 1;
@@ -67,6 +64,8 @@ angular.module('app').factory('IssuesService', function($http) {
         return fetchAllIssues(page + 1, issues);
       }
       return issues;
+    }).catch(function(error) {
+      console.log(error);
     });
   }
 
@@ -84,8 +83,8 @@ angular.module('app').factory('IssuesService', function($http) {
         return fetchAllIssues(page + 1, issues);
       }
       return issues;
-    }).catch(function (error) {
-      /** TODO: Handle error */
+    }).catch(function(error) {
+      console.log(error);
     });
   }
 
