@@ -1,47 +1,55 @@
 <div class="" ng-controller="MapCtrl as map">
-
-    <section id="left-panel" class="col-md-3">
-      <div class="list-group">
-        <form class="form-inline list-group-item" id="searchForm" name="searchForm" novalidate>
-          <div class="form-group">
-            <label for="searchText" class="sr-only">Search query</label>
-            <input type="text" class="form-control" id="searchText" name="map.searchText" placeholder="quick search" ng-model="map.searchText">
+<!-- LEFT PANEL -->
+  <section id="left-panel" class="col-md-3">
+    <!-- Form -->
+    <div class="list-group">
+      <form class="form-inline list-group-item" id="searchForm" name="searchForm" novalidate>
+        <div class="form-group">
+          <label for="searchText" class="sr-only">Search query</label>
+          <input type="text" class="form-control" id="searchText" name="map.searchText" placeholder="quick search" ng-model="map.searchText">
+        </div>
+        <div class="pull-right">
+          <button type="button" class="btn btn-primary" ng-click="map.filterOpen()">
+          <span class="fa fa-filter" aria-hidden="true"></span> Filter
+        </button>
+        </div>
+      </form>
+      <!-- List of issues -->
+      <p class="text-center" ng-show="map.loading">
+        <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" aria-label="Loading..."></i>
+      </p>
+      <uib-accordion>
+        <!-- The id is used to scroll to the issue when we click on map-->
+        <div id="issue{{issue.id}}" uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
+          <uib-accordion-heading>
+            <a ui-sref="home.issues({ id: issue.id })">
+              <h5>{{ issue.issueType.description }}
+                  <span class="badge badge-{{ issue.icon.markerColor }}"> {{ issue.state }}</span>
+                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+              </h5>
+            </a>
+          </uib-accordion-heading>
+          <div ng-if="status.open" class="accordion-body">
+          <!-- The ng-if ensures that the template is not copied in all the other closed accordions -->
+            <div ui-view />
           </div>
-          <div class="pull-right">
-            <button type="button" class="btn btn-primary" ng-click="map.filterOpen()">
-            <span class="fa fa-filter"></span> Filter
-          </button>
-          </div>
-        </form>
-        <uib-accordion>
-          <div uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
-            <uib-accordion-heading>
-              <a ui-sref="home.issues({ id: issue.id })">
-                <h5 class="list-group-item-heading">{{ issue.issueType.description }}
-                   <span class="badge badge-{{ issue.icon.markerColor }}"> {{ issue.state }}</span>
-                  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-                </h5>
-              </a>
-            </uib-accordion-heading>
-            <div ng-if="status.open" class="accordion-body">
-            <!-- The ng-if ensures that the template is not copied in all the other closed accordions -->
-              <div ui-view />
-            </div>
-          </div>
-        </uib-accordion>
-      </div>
-    </section>
-    <section id="map-panel" class="col-md-9 no-padding">
-      <div id="map-canvas">
-        <leaflet defaults="map.defaults" markers="map.markers" width="100%" height="100vh" lf-center="map.center" ng-style="{'cursor' : map.cursor}"></leaflet>
-      </div>
-      <button class="btn btn-success btn-circle btn-xl pull-bottom-right" ng-click="map.toggleEditMode(true)" ng-class="{ 'active': map.editMode }">
-      <i class="glyphicon glyphicon-map-marker"></i>
-    </button>
-    </section>
-    <div class="pull-top-right">
-      <button class="btn btn-default btn-circle btn-lg" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">
-        <span class="fa fa-sign-out"></span>
-      </button>
+        </div>
+      </uib-accordion>
     </div>
+  </section>
+  <!-- MAP CANVAS -->
+  <section id="map-panel" class="col-md-9 no-padding">
+    <div id="map-canvas">
+      <leaflet defaults="map.defaults" markers="map.markers" width="100%" height="100vh" lf-center="map.center" ng-style="{'cursor' : map.cursor}"></leaflet>
+    </div>
+    <button class="btn btn-success btn-circle btn-xl pull-bottom-right" ng-click="map.toggleEditMode(true)" ng-class="{ 'active': map.editMode }">
+    <i ng-show="map.loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true" aria-label="Loading..."></i>
+    <i ng-show="!map.loading" class="glyphicon glyphicon-map-marker" aria-hidden="true" aria-label="Add new feature"></i>
+  </button>
+  </section>
+  <div class="pull-top-right">
+    <button class="btn btn-default btn-circle btn-lg" ng-controller="LogoutCtrl as logout" ng-click="logout.disconnect()">
+      <span class="fa fa-sign-out" aria-hidden="true" aria-label="Sign out"></span>
+    </button>
+  </div>
 </div>

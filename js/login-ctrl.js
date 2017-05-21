@@ -5,6 +5,7 @@ angular.module('app').controller('LoginCtrl', function (AuthService, $http, $sta
 
   login.connect = function () {
     delete login.alert;
+    login.loading = true;
     $http({
       method: 'POST',
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/auth',
@@ -17,32 +18,35 @@ angular.module('app').controller('LoginCtrl', function (AuthService, $http, $sta
         message: "Unable to log you.",
         error: true
       }
+      login.loading = false;
     });
   };
 
   login.createUser = function () {
     delete login.alert;
+    login.loading = true;
     login.newuser.roles = ["citizen"];
     $http({
       method: 'POST',
       url: 'https://masrad-dfa-2017-c.herokuapp.com/api/users',
       data: login.newuser
     }).then(function (res) {
-      login.alert = {
-        message: "Your account has been created, please log in",
-        info: true
+      login.user = {
+        name: login.newuser.name,
+        password: login.newuser.password
       }
-      $state.go('login');
+      login.connect();
     }).catch(function (error) {
       if (error.data.name.kind === "user defined") {
         login.alert = {
-          message: "Your username is already used"
+          message: "Your username is already taken"
         }
       } else {
         login.alert ={
           message : "FFFFUUUUUUU!! Internet is broken, come back later."
         }
       }
+      login.loading = false;
       login.alert.error = true;
     });
   };

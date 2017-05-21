@@ -1,5 +1,5 @@
 angular.module('app').controller('MapCtrl', function(
-  $scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope) {
+  $scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope, $uiViewScroll) {
   var map = this;
   map.markers = []; // markers shown on map, can be a filtered version of map.issues
   map.issues = []; // data provided by IssueService
@@ -40,10 +40,12 @@ angular.module('app').controller('MapCtrl', function(
    * Get all the issues and makes them fancy
    */
   map.getIssues = function () {
+    map.loading = true;
     IssuesService.getIssues().then(function(issues) {
       _.each(issues, function(issue) {
           issue.icon = {
-            type : "vectorMarker"
+            type : 'awesomeMarker',
+            prefix: 'fa'
           }
           /**
            * Is there a better way to do this? I want to merge two objects
@@ -54,6 +56,7 @@ angular.module('app').controller('MapCtrl', function(
         });
         map.issues = issues;
         map.markers = issues;
+        map.loading = false;
     });
   };
   map.getIssues();
@@ -134,7 +137,9 @@ angular.module('app').controller('MapCtrl', function(
   });
 
   $scope.$on('leafletDirectiveMarker.click', function(event, args) {
-    console.log(args);
+    var selected = angular.element( document.querySelector( '#issue' + args.model.id ) );
+    $uiViewScroll(selected);
+    // TODO : Open the accordion
   });
 
   /**

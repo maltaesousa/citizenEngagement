@@ -1,5 +1,5 @@
 /**
- * Controls the issue details in the accordion body on the left panel.
+ * Controls the issue details in the accordion body on the left panel and the comments
  */
 angular.module('app').controller('IssueCtrl', function(IssuesService, CommentsService, $stateParams, $uibModal, $scope) {
   var issueCtrl = this;
@@ -8,12 +8,15 @@ angular.module('app').controller('IssueCtrl', function(IssuesService, CommentsSe
 
   var issueId = $stateParams.id;
   IssuesService.getIssue(issueId).then(function(issue) {
+    console.log(issue);
     issueCtrl.issue = issue;
   });
 
   issueCtrl.getComments = function() {
+    issueCtrl.comments.loading = true;
     CommentsService.getComments(issueId).then(function(comments) {
       issueCtrl.comments = comments;
+      issueCtrl.comments.loading = false;
     });
   };
   issueCtrl.getComments();

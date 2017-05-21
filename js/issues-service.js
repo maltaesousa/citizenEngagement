@@ -6,7 +6,7 @@ angular.module('app').factory('IssuesService', function($http) {
   var service = {};
   // default parameters to get issues
   var defaults = {
-    include: "issueType",
+    include: ["issueType","creator"],
     pageSize: 50
   };
 

@@ -1,11 +1,19 @@
 <!-- This is the body of accordion it contains issue details and related comments -->
+<small><span class="glyphicon glyphicon-user"></span> {{ issue.creator.name }}</small>
 <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
 <p>
+  <img ng-show="issue.imageUrl" class="img-responsive img-rounded" src="{{ issue.imageUrl }}" alt="issue image">
   {{ issue.description }}
 </p>
+<!-- Comments section-->
 <section>
+  <p class="text-center" ng-show="issueCtrl.comments.loading">
+    <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" aria-label="Loading..."></i>
+  </p>
   <div ng-repeat="comment in issueCtrl.comments" class="well well-sm">
-    {{ comment.text }}
+    <small><span class="glyphicon glyphicon-user"></span> {{ comment.author.name }}</small>
+    <small class="pull-right">{{ comment.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+    <div>{{ comment.text }}</div>
   </div>
   <form name="commentForm" novalidate ng-submit="issueCtrl.addComment()">
     <div class="form-group" ng-class="{'has-error' : commentForm.commentText.$invalid && commentForm.commentText.$dirty}">

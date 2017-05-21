@@ -1,83 +1,89 @@
-<div class="alert col-md-4 col-md-offset-4" ng-if="login.alert" ng-class="{ 'alert-success': login.alert.info, 'alert-danger': login.alert.error }">
-  {{ login.alert.message }}
-</div>
-<div class="col-md-4 col-md-offset-4">
-  <h4>Log in</h4>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <form id="login" name="loginForm" novalidate>
-        <div class="form-group" ng-class="{'has-error' : loginForm.username.$invalid && loginForm.username.$dirty}">
-          <label for="username" class="sr-only">Username</label>
-          <input type="text" id="username" name="username" placeholder="Username" class="form-control" ng-model="login.user.name" required>
-          <p class="help-block" ng-show="loginForm.username.$invalid && loginForm.username.$dirty">
-            <em ng-show="loginForm.username.$error.required">Please provide an username</em>
-          </p>
-        </div>
-        <div class="form-group" ng-class="{'has-error' : loginForm.password.$invalid && loginForm.password.$dirty}">
-          <label for="password" class="sr-only">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" class="form-control" ng-model="login.user.password"
-            required>
-          <p class="help-block" ng-show="loginForm.password.$invalid && loginForm.password.$dirty">
-            <em ng-show="loginForm.password.$error.required">Forgot your password?</em>
-          </p>
-        </div>
-      </form>
-      <button class="btn btn-primary pull-right" ng-click="login.connect()" ng-disabled="loginForm.$invalid">Log in</button>
+<div class="login-page">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="alert login-alert" ng-if="login.alert" ng-class="{ 'alert-success': login.alert.info, 'alert-danger': login.alert.error }">
+      {{ login.alert.message }}
     </div>
-  </div>
-  <h4>Sign up</h4>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <form id="signup" name="signupForm" novalidate>
-        <div class="form-group" ng-class="{'has-error' : signupForm.firstname.$invalid && signupForm.firstname.$dirty}">
-          <label for="firstname" class="sr-only">First name</label>
-          <input type="text" id="firstname" name="firstname" placeholder="First name" class="form-control" ng-model="login.newuser.firstname"
-            required ng-minlength="2" ng-maxlength="25">
-          <p class="help-block" ng-show="signupForm.firstname.$invalid && signupForm.firstname.$dirty">
-            <em ng-show="signupForm.firstname.$error.required">Please provide your first name</em>
-            <em ng-show="signupForm.firstname.$error.minlength">Too short...</em>
-            <em ng-show="signupForm.firstname.$error.maxlength">Too long...</em>
-          </p>
-        </div>
-        <div class="form-group" ng-class="{'has-error' : signupForm.lastname.$invalid && signupForm.lastname.$dirty}">
-          <label for="lastname" class="sr-only">Last name</label>
-          <input type="text" id="lastname" name="lastname" placeholder="Last name" class="form-control" ng-model="login.newuser.lastname"
-            required ng-minlength="2" ng-maxlength="25">
-          <p class="help-block" ng-show="signupForm.lastname.$invalid && signupForm.lastname.$dirty">
-            <em ng-show="signupForm.lastname.$error.required">Please provide your first name</em>
-            <em ng-show="signupForm.lastname.$error.minlength">Too short...</em>
-            <em ng-show="signupForm.lastname.$error.maxlength">Too long...</em>
-          </p>
-        </div>
-        <div class="form-group" ng-class="{'has-error' : signupForm.username.$invalid && signupForm.username.$dirty}">
-          <label for="username" class="sr-only">Username</label>
-          <input type="text" id="username" name="username" placeholder="Username" class="form-control" ng-model="login.newuser.name"
-            required ng-maxlength="25" ng-pattern="/^[a-zA-Z0-9]+$/">
-          <p class="help-block" ng-show="signupForm.username.$invalid && signupForm.username.$dirty">
-              <em ng-show="signupForm.username.$error.required">Please provide your username</em>
-              <em ng-show="signupForm.username.$error.maxlength">Too long...</em>
-            <em ng-show="signupForm.username.$error.pattern">Trump made special characters illegal</em>
-          </p>
-        </div>
-        <div class="form-group" ng-class="{'has-error' : signupForm.password.$invalid && signupForm.password.$dirty}">
-          <label for="password" class="sr-only">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" class="form-control" ng-model="login.newuser.password"
-            required ng-minlength="4">
-          <p class="help-block" ng-show="signupForm.password.$invalid && signupForm.password.$dirty">
-            <em ng-show="signupForm.username.$error.required">Please provide a password</em>
-            <em ng-show="signupForm.password.$error.minlength">Too short...</em>
-          </p>
-        </div>
-        <div class="form-group" ng-class="{'has-error' : signupForm.checkPassword.$invalid && signupForm.checkPassword.$dirty}">
-          <label for="checkPassword" class="sr-only">Repeat your password</label>
-          <input type="password" id="checkPassword" name="checkPassword" placeholder="Repeat your password" class="form-control" ng-model="login.checkPassword"
-            required match-with="login.newuser.password">
-          <p class="help-block" ng-show="signupForm.checkPassword.$invalid && signupForm.checkPassword.$dirty">
-            <em ng-show="signupForm.checkPassword.$invalid">Passwords don't match</em>
-          </p>
-        </div>
-      </form>
-      <button class="btn btn-info pull-right" ng-click="login.createUser()" ng-disabled="signupForm.$invalid">Sign up</button>
+    <h4>Log in</h4>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form id="login" name="loginForm" novalidate>
+          <div class="form-group" ng-class="{'has-error' : loginForm.username.$invalid && loginForm.username.$dirty}">
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" class="form-control" ng-model="login.user.name" required>
+            <p class="help-block" ng-show="loginForm.username.$invalid && loginForm.username.$dirty">
+              <em ng-show="loginForm.username.$error.required">Please provide an username</em>
+            </p>
+          </div>
+          <div class="form-group" ng-class="{'has-error' : loginForm.password.$invalid && loginForm.password.$dirty}">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" ng-model="login.user.password"
+              required>
+            <p class="help-block" ng-show="loginForm.password.$invalid && loginForm.password.$dirty">
+              <em ng-show="loginForm.password.$error.required">Forgot your password?</em>
+            </p>
+          </div>
+        </form>
+        <button class="btn btn-primary pull-right" ng-click="login.connect()" ng-disabled="loginForm.$invalid">Log in
+          <i ng-show="login.loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <h4>Sign up</h4>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form id="signup" name="signupForm" novalidate>
+          <div class="form-group" ng-class="{'has-error' : signupForm.firstname.$invalid && signupForm.firstname.$dirty}">
+            <label for="firstname" class="sr-only">First name</label>
+            <input type="text" id="firstname" name="firstname" placeholder="First name" class="form-control" ng-model="login.newuser.firstname"
+              required ng-minlength="2" ng-maxlength="25">
+            <p class="help-block" ng-show="signupForm.firstname.$invalid && signupForm.firstname.$dirty">
+              <em ng-show="signupForm.firstname.$error.required">Please provide your first name</em>
+              <em ng-show="signupForm.firstname.$error.minlength">Too short...</em>
+              <em ng-show="signupForm.firstname.$error.maxlength">Too long...</em>
+            </p>
+          </div>
+          <div class="form-group" ng-class="{'has-error' : signupForm.lastname.$invalid && signupForm.lastname.$dirty}">
+            <label for="lastname" class="sr-only">Last name</label>
+            <input type="text" id="lastname" name="lastname" placeholder="Last name" class="form-control" ng-model="login.newuser.lastname"
+              required ng-minlength="2" ng-maxlength="25">
+            <p class="help-block" ng-show="signupForm.lastname.$invalid && signupForm.lastname.$dirty">
+              <em ng-show="signupForm.lastname.$error.required">Please provide your first name</em>
+              <em ng-show="signupForm.lastname.$error.minlength">Too short...</em>
+              <em ng-show="signupForm.lastname.$error.maxlength">Too long...</em>
+            </p>
+          </div>
+          <div class="form-group" ng-class="{'has-error' : signupForm.username.$invalid && signupForm.username.$dirty}">
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" class="form-control" ng-model="login.newuser.name"
+              required ng-maxlength="25" ng-pattern="/^[a-zA-Z0-9]+$/">
+            <p class="help-block" ng-show="signupForm.username.$invalid && signupForm.username.$dirty">
+                <em ng-show="signupForm.username.$error.required">Please provide your username</em>
+                <em ng-show="signupForm.username.$error.maxlength">Too long...</em>
+              <em ng-show="signupForm.username.$error.pattern">Trump made special characters illegal</em>
+            </p>
+          </div>
+          <div class="form-group" ng-class="{'has-error' : signupForm.password.$invalid && signupForm.password.$dirty}">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" ng-model="login.newuser.password"
+              required ng-minlength="4">
+            <p class="help-block" ng-show="signupForm.password.$invalid && signupForm.password.$dirty">
+              <em ng-show="signupForm.username.$error.required">Please provide a password</em>
+              <em ng-show="signupForm.password.$error.minlength">Too short...</em>
+            </p>
+          </div>
+          <div class="form-group" ng-class="{'has-error' : signupForm.checkPassword.$invalid && signupForm.checkPassword.$dirty}">
+            <label for="checkPassword" class="sr-only">Repeat your password</label>
+            <input type="password" id="checkPassword" name="checkPassword" placeholder="Repeat your password" class="form-control" ng-model="login.checkPassword"
+              required match-with="login.newuser.password">
+            <p class="help-block" ng-show="signupForm.checkPassword.$invalid && signupForm.checkPassword.$dirty">
+              <em ng-show="signupForm.checkPassword.$invalid">Passwords don't match</em>
+            </p>
+          </div>
+        </form>
+        <button class="btn btn-info pull-right" ng-click="login.createUser()" ng-disabled="signupForm.$invalid">Sign up
+          <i ng-show="login.loading" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
   </div>
 </div>
