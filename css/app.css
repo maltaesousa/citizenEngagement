@@ -27,7 +27,6 @@ div.panel.panel-open .panel-body {
   padding: 1em 0;
 }
 
-
 h5.list-group-item-heading {
   margin-bottom: inherit;
 }
@@ -41,6 +40,21 @@ h5.list-group-item-heading {
 
 div.panel-heading {
   padding: 0;
+}
+
+.badge-red {
+  background-color: red;
+}
+
+.badge-orange {
+  background-color: orange;
+}
+
+.badge-gray {
+  background-color: gray;
+}
+.badge-green {
+  background-color: green;
 }
 
 .list-group-item a:hover,

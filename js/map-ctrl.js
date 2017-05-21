@@ -15,31 +15,44 @@ angular.module('app').controller('MapCtrl', function(
     lat: 46.778,
     lng: 6.641,
     zoom: 15 // This one is actually optional
-  }
+  };
 
   /**
-   * Markers appearance
+   * This controls the colors depending on states
    */
-  var defaultIcon = {
-    type: "vectorMarker",
-    icon: "coffee",
-    markerColor: "red"
-  }
+  map.colors = {
+    'new': 'red',
+    'inProgress': 'orange',
+    'rejected':'gray',
+    'resolved':'green'
+  };
 
   /**
-   * Get all the issues. It's in a function so it can be called
-   * after creating/modifying an issue to refresh view.
+   * This controls the icons depending on types
+   */
+  map.icons = {
+    'dangerous-road':'road',
+    'graffiti':'paint-brush',
+    'broken-streetlight':'lightbulb-o'
+  };
+
+  /**
+   * Get all the issues and makes them fancy
    */
   map.getIssues = function () {
     IssuesService.getIssues().then(function(issues) {
       _.each(issues, function(issue) {
-          issue.icon = defaultIcon;
+          issue.icon = {
+            type : "vectorMarker"
+          }
+          issue.icon.icon = _.get(map.icons, issue.issueType.name);
+          issue.icon.markerColor = _.get(map.colors, issue.state);
         });
+        console.log(issues);
         map.issues = issues;
         map.markers = issues;
-        console.log('appelé');
     });
-  }
+  };
   map.getIssues();
   
 
@@ -52,6 +65,7 @@ angular.module('app').controller('MapCtrl', function(
       map.getIssues();
     });
   };
+
   /**
    * I wanted to filter directly map.markers with pipeline filter in html
    * But it threw a lot of errors although it worked.
@@ -64,9 +78,10 @@ angular.module('app').controller('MapCtrl', function(
       map.markers = map.issues;
     }
   });
-/**
- * This switches the edit mode on or off
- */
+
+  /**
+   * This switches the edit mode on or off
+   */
   map.toggleEditMode = function(on) {
     if (on) {
       map.editMode = true;
@@ -75,7 +90,7 @@ angular.module('app').controller('MapCtrl', function(
       map.editMode = false;
       map.cursor = 'auto';
     }
-  }
+  };
 
   /**
    * If editMode is on and user clicks on map, it will open a
@@ -141,14 +156,13 @@ angular.module('app').controller('MapCtrl', function(
   /**
    * Zoom to user position
    */
-  $geolocation.getCurrentPosition()
-    .then(function(position) {
-      map.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        zoom: 16
-      }
-    }, function (error) {
-      console.log(error);
-    })
+  $geolocation.getCurrentPosition().then(function(position) {
+    map.center = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+      zoom: 16
+    }
+  }, function (error) {
+    console.log(error);
+  })
 });
