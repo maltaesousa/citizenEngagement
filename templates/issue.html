@@ -1,8 +1,26 @@
-<!-- This is the body of accordion-->
-<div>
-  <small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
-  <p>
-    {{ issue.description }}
-  </p>
-  <div ng-repeat="comment in issueCtrl.comments" class="well well-sm">{{ comment.text }}</div>
-</div>
+<!-- This is the body of accordion it contains issue details and related comments -->
+<small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+<p>
+  {{ issue.description }}
+</p>
+<section>
+  <div ng-repeat="comment in issueCtrl.comments" class="well well-sm">
+    {{ comment.text }}
+  </div>
+  <form name="commentForm" novalidate ng-submit="issueCtrl.addComment()">
+    <div class="form-group" ng-class="{'has-error' : commentForm.commentText.$invalid && commentForm.commentText.$dirty}">
+      <label for="commentText" class="sr-only">New comment</label>
+      <textarea id="commentText" name="commentText" class="form-control input-sm" rows="2" placeholder="New comment"
+       ng-model='issueCtrl.comment.text' ng-maxlength="1000" required></textarea>
+      <p class="help-block" ng-show="commentForm.commentText.$invalid && commentForm.commentText.$dirty">
+        <em ng-show="commentForm.commentText.$error.maxlength">You're talking too much</em>
+      </p>
+    </div>
+    <div class="clearfix">
+      <button id="commentSubmit" class="btn btn-success btn-sm pull-right" ng-disabled="commentForm.$invalid">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,5 +1,5 @@
 /**
- * tags in modal styling
+ * tags in modal
  */
 .tag.label {
   display: inline-block;
@@ -21,7 +21,7 @@
 }
 
 /**
- * Styling left-panel
+ * left-panel
  */
 div.panel.panel-open .panel-body {
   padding: 1em 0;
@@ -71,6 +71,13 @@ div.panel-heading {
 
 .list-group {
   margin: 0;
+}
+
+/** 
+ * Accordion body
+ */
+#commentText {
+  resize: vertical;
 }
 
 /** Make container and body unclickable,

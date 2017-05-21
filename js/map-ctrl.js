@@ -1,8 +1,8 @@
 angular.module('app').controller('MapCtrl', function(
   $scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope) {
   var map = this;
-  map.markers = []; // markers shown on map
-  map.issues = []; // data
+  map.markers = []; // markers shown on map, can be a filtered version of map.issues
+  map.issues = []; // data provided by IssueService
   map.editMode = false; // Does the user want to add a point ?
   map.cursor = 'auto'; // handles cursor style
 
@@ -45,24 +45,36 @@ angular.module('app').controller('MapCtrl', function(
           issue.icon = {
             type : "vectorMarker"
           }
-          issue.icon.icon = _.get(map.icons, issue.issueType.name);
-          issue.icon.markerColor = _.get(map.colors, issue.state);
+          /**
+           * Is there a better way to do this? I want to merge two objects
+           * where the value of one will be the key of the other.
+           */
+          issue.icon.icon = _.get(map.icons, issue.issueType.name, 'star');
+          issue.icon.markerColor = _.get(map.colors, issue.state, 'black');
         });
-        console.log(issues);
         map.issues = issues;
         map.markers = issues;
     });
   };
   map.getIssues();
-  
 
+  /**
+   * Opens the modal to filter the issues shown on map
+   */
   map.filterOpen = function() {
     $uibModal.open({
       templateUrl: "templates/filtermodal.html",
       controller: "FilterCtrl",
       controllerAs: "filterCtrl",
-    }).closed.then(function() {
+    }).result.then(function() {
       map.getIssues();
+    }, function() {
+      /**
+       * Need to do something when modal is dismissed otherwise an error is shown
+       * see here: https://github.com/angular-ui/bootstrap/issues/6412
+       * (last comment is funny)
+       */
+      console.log('Modal dismissed');
     });
   };
 
@@ -109,11 +121,6 @@ angular.module('app').controller('MapCtrl', function(
       }).result.then(function() {
         map.getIssues();
       }, function() {
-        /**
-         * Need to do something when modal is dismissed otherwise an error is shown
-         * see here: https://github.com/angular-ui/bootstrap/issues/6412
-         * (last comment is funny)
-         */
         console.log('Modal dismissed');
       });
     }
@@ -134,13 +141,13 @@ angular.module('app').controller('MapCtrl', function(
    * Zoom to marker with id provided in the state
    * 
    * C'est pas très beau, c'est appelé autant de fois qu'il y a de markers.
-   * Apparemment, a chaque marker ajouté = un content loaded. Il faudrait que
+   * Apparemment, a chaque marker ajouté à la carte = un content loaded. Il faudrait que
    * le chargement du state se comporte comme une promesse et qu'une fois tous les
    * markers ajoutés, on fasse le zoom.
    * 
    * J'ai vu que cette manière de faire avec les event est dépréciée et qu'une nouvelle
-   * approche existe à l'aide de "Transtions hooks". Je n'ai malheureusement pas 
-   * le temps de le tester
+   * approche existe à l'aide de "Transtions hooks". Je n'ai malheureusement pas eu
+   * le temps de le tester..
    */
   $scope.$on('$viewContentLoaded', function () {
     if ($stateParams.id) {
