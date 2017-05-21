@@ -77,9 +77,10 @@ angular.module('app').controller('MapCtrl', function(
     }
   }
 
-/**
- * What happens when user clicks on canvas.
- */
+  /**
+   * If editMode is on and user clicks on map, it will open a
+   * modal for user to report a new issue
+   */
   $scope.$on('leafletDirectiveMap.click', function(event, args) {
     if (map.editMode) {
       map.toggleEditMode();
@@ -103,6 +104,9 @@ angular.module('app').controller('MapCtrl', function(
     }
   });
 
+  /**
+   * Toogle edit mode to off when user clicks outside the map
+   */
   $scope.$on('leafletDirectiveMap.blur', function(event) {
     map.toggleEditMode();
   });
@@ -134,9 +138,16 @@ angular.module('app').controller('MapCtrl', function(
     }
   });
 
+  /**
+   * Zoom to user position
+   */
   $geolocation.getCurrentPosition()
-    .then(function (position) {
-      console.log(position)
+    .then(function(position) {
+      map.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        zoom: 16
+      }
     }, function (error) {
       console.log(error);
     })
