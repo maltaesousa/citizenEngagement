@@ -85,6 +85,7 @@ angular.module('app').controller('MapCtrl', function(
    * I wanted to filter directly map.markers with pipeline filter in html
    * But it threw a lot of errors although it worked.
    * This solution, found on stackoverflow is a cleaner workaround
+   * (and maybe the only way to do it properly)
    */
   $scope.$watch("map.searchText", function(newVal) {
     if (newVal !== '') {
