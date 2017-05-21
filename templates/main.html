@@ -13,7 +13,7 @@
           </button>
           </div>
         </form>
-        <uib-accordion ui-sref-active="active">
+        <uib-accordion>
           <div uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
             <uib-accordion-heading>
               <a ui-sref="home.issues({ id: issue.id })">

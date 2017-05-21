@@ -4,7 +4,7 @@ angular.module('app').controller('FilterCtrl', function($scope, TypesService, Is
   filterCtrl.selected = {
     types: []
   };
-  //TODO Cancel filter
+  // TODO Get current filter, Cancel filter
   filterCtrl.typesSettings = {displayProp: 'description'};
 
   filterCtrl.dismiss = $uibModalInstance.dismiss;
@@ -19,7 +19,6 @@ angular.module('app').controller('FilterCtrl', function($scope, TypesService, Is
         $in: _.map(filterCtrl.selected.types, 'id')
       }
     }
-    console.log(query);
     IssuesService.setFilter(query);
     $uibModalInstance.close();
   }

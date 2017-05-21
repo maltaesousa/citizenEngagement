@@ -80,7 +80,7 @@ angular.module('app').factory('IssuesService', function($http) {
     }).then(function(res) {
       if (res.data.length) {
         issues = issues.concat(res.data);
-        return fetchAllIssues(page + 1, issues);
+        return fetchFilteredIssues(page + 1, issues);
       }
       return issues;
     }).catch(function(error) {
