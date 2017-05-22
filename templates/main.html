@@ -20,16 +20,16 @@
       </p>
       <uib-accordion>
         <!-- The id is used to scroll to the issue when we click on map-->
-        <div id="issue{{issue.id}}" uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="status.open">
+        <div id="issue{{issue.id}}" uib-accordion-group ng-repeat="issue in map.markers" class="list-group-item" is-open="issue.open">
           <uib-accordion-heading>
             <a ui-sref="home.issues({ id: issue.id })">
               <h5>{{ issue.issueType.description }}
                   <span class="badge badge-{{ issue.icon.markerColor }}"> {{ issue.state }}</span>
-                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': issue.open, 'glyphicon-chevron-right': !issue.open}"></i>
               </h5>
             </a>
           </uib-accordion-heading>
-          <div ng-if="status.open" class="accordion-body">
+          <div ng-if="issue.open" class="accordion-body">
           <!-- The ng-if ensures that the template is not copied in all the other closed accordions -->
             <div ui-view />
           </div>

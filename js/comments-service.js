@@ -18,7 +18,6 @@ angular.module('app').factory('CommentsService', function($http) {
   service.getComments = function(issueID) {
     service.issueID = issueID;
     return fetchAllComments().then(function(comments) {
-      console.log(comments);
       return comments;
     });
   };

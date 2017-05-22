@@ -1,5 +1,5 @@
 angular.module('app').controller('MapCtrl', function(
-  $scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope, $uiViewScroll) {
+  $scope, $filter, IssuesService, $geolocation, $uibModal, $stateParams, $rootScope, $uiViewScroll, $state) {
   var map = this;
   map.markers = []; // markers shown on map, can be a filtered version of map.issues
   map.issues = []; // data provided by IssueService
@@ -57,6 +57,7 @@ angular.module('app').controller('MapCtrl', function(
         map.issues = issues;
         map.markers = issues;
         map.loading = false;
+        console.log(issues);
     });
   };
   map.getIssues();
@@ -139,31 +140,13 @@ angular.module('app').controller('MapCtrl', function(
 
   $scope.$on('leafletDirectiveMarker.click', function(event, args) {
     var selected = angular.element( document.querySelector( '#issue' + args.model.id ) );
+    $state.go('home.issues', args.model.id);
     $uiViewScroll(selected);
-    // TODO : Open the accordion
-  });
-
-  /**
-   * Zoom to marker with id provided in the state
-   * 
-   * C'est pas très beau, c'est appelé autant de fois qu'il y a de markers.
-   * Apparemment, a chaque marker ajouté à la carte = un content loaded. Il faudrait que
-   * le chargement du state se comporte comme une promesse et qu'une fois tous les
-   * markers ajoutés, on fasse le zoom.
-   * 
-   * J'ai vu que cette manière de faire avec les event est dépréciée et qu'une nouvelle
-   * approche existe à l'aide de "Transtions hooks". Je n'ai malheureusement pas eu
-   * le temps de le tester..
-   */
-  $scope.$on('$viewContentLoaded', function () {
-    if ($stateParams.id) {
-      issue = _.find(map.markers, {id: $stateParams.id});
-      map.center = {
-        lat: issue.lat,
-        lng: issue.lng,
-        zoom: 18
+    _.each(map.markers, function(issue) {
+      if (args.model.id === issue.id) {
+        issue.open = true;
       }
-    }
+    });
   });
 
   /**
