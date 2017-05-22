@@ -36,6 +36,8 @@ There are two ways of doing this, with another request to the api/issues/searche
 I added all that in the issue details. There's a small textarea with validation to add a comment. It would be nice to add some color to our own comments.
 
 ## How to run it
+App is deployed here: https://arrr.ch
+
 The assets are on a CDN except for one. (I didn't find a CDN for ngGeolocation)
 Then:
 ```live-server --entry-file=index.html```
