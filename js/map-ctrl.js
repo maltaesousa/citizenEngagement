@@ -142,10 +142,18 @@ angular.module('app').controller('MapCtrl', function(
     $state.go('home.issues', { id: args.model.id});
   });
 
-  $scope.$on('$stateChangeStart', function () {
+  /**
+   * Scrolls to top and opens accordion when state changes
+   * I wanted this to happen when we enter the app with an id in the url
+   * But I'm not able to select the element. Looks like the element is not ready
+   * before StateChangeSuccess is fired. :(
+   */
+  $scope.$on('$stateChangeSuccess', function () {
     if ($stateParams.id) {
       var selected = angular.element( document.querySelector( '#issue' + $stateParams.id ) );
-      $uiViewScroll(selected);
+      if (selected[0]) {
+        $uiViewScroll(selected);
+      }
       _.each(map.markers, function(issue) {
         if ($stateParams.id === issue.id) {
           issue.open = true;
