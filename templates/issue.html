@@ -1,9 +1,9 @@
 <!-- This is the body of accordion it contains issue details and related comments -->
-<small><span class="glyphicon glyphicon-user"></span> {{ issue.creator.name }}</small>
-<small class="pull-right">{{ issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
+<small><span class="glyphicon glyphicon-user"></span> {{ issueCtrl.issue.creator.name }}</small>
+<small class="pull-right">{{ issueCtrl.issue.createdAt | date: "dd.MM.yyyy HH:mm" }}</small>
 <p>
-  <img ng-show="issue.imageUrl" class="img-responsive img-rounded" src="{{ issue.imageUrl }}" alt="issue image">
-  {{ issue.description }}
+  <img ng-show="issue.imageUrl" class="img-responsive img-rounded" src="{{ issueCtrl.issue.imageUrl }}" alt="issue image">
+  {{ issueCtrl.issue.description }}
 </p>
 <!-- Comments section-->
 <section>

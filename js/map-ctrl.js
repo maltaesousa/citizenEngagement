@@ -139,14 +139,19 @@ angular.module('app').controller('MapCtrl', function(
   });
 
   $scope.$on('leafletDirectiveMarker.click', function(event, args) {
-    var selected = angular.element( document.querySelector( '#issue' + args.model.id ) );
-    $state.go('home.issues', args.model.id);
-    $uiViewScroll(selected);
-    _.each(map.markers, function(issue) {
-      if (args.model.id === issue.id) {
-        issue.open = true;
-      }
-    });
+    $state.go('home.issues', { id: args.model.id});
+  });
+
+  $scope.$on('$stateChangeStart', function () {
+    if ($stateParams.id) {
+      var selected = angular.element( document.querySelector( '#issue' + $stateParams.id ) );
+      $uiViewScroll(selected);
+      _.each(map.markers, function(issue) {
+        if ($stateParams.id === issue.id) {
+          issue.open = true;
+        }
+      });
+    }
   });
 
   /**

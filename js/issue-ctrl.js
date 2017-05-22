@@ -5,8 +5,13 @@ angular.module('app').controller('IssueCtrl', function(IssuesService, CommentsSe
   var issueCtrl = this;
   issueCtrl.comments = {}; // comments related to the current issue
   issueCtrl.comment = {}; // new comment
+  issueCtrl.issue = {}; // issue details
 
   var issueId = $stateParams.id;
+
+  IssuesService.getIssue(issueId).then(function(issue) {
+    issueCtrl.issue = issue;
+  });
 
   issueCtrl.getComments = function() {
     issueCtrl.comments.loading = true;
