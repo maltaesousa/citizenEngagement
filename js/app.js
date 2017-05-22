@@ -41,9 +41,7 @@ angular.module('app').config(function ($locationProvider, $stateProvider,
 
 angular.module('app').run(function(AuthService, $rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function(event, toState) {
-    console.log('fired');
         if (!AuthService.token && toState.name !== 'login') {
-            console.log(AuthService.token);
             event.preventDefault();
             $state.go('login');
         }
