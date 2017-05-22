@@ -32,7 +32,7 @@
       <!-- TODO: Not enough, need more rules -->
       <div class="form-group" ng-class="{'has-error' : saveForm.image.$invalid && saveForm.image.$dirty}">
         <label for="image">Image url</label>
-        <input type="url" id="image" name="image" placeholder="Paste URL of an image" class="form-control" ng-model="saveCtrl.issue.image">
+        <input type="url" id="image" name="image" placeholder="Paste URL of an image" class="form-control" ng-model="saveCtrl.issue.imageUrl">
         <p class="help-block" ng-show="saveForm.image.$invalid && saveForm.image.$dirty"></p>
       </div>
       <!-- Tags array-->

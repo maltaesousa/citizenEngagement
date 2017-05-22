@@ -8,7 +8,6 @@ angular.module('app').controller('IssueCtrl', function(IssuesService, CommentsSe
 
   var issueId = $stateParams.id;
   IssuesService.getIssue(issueId).then(function(issue) {
-    console.log(issue);
     issueCtrl.issue = issue;
   });
 

@@ -12,14 +12,12 @@ angular.module('app').factory('UsersService', function($http) {
       _.each(users, function(user) {
         usernames.push(user.name);
       });
-      console.log(issue.issueType);
       return usernames });
   };
 
   var usersPromise;
   function loadUsers() {
     if (!usersPromise) {
-      console.log("get");
       usersPromise = $http({
         method: "GET",
         url: 'https://masrad-dfa-2017-c.herokuapp.com/api/users',
