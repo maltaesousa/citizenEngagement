@@ -5,9 +5,11 @@ The purpose was to build a front-end app allowing an user to report issues encou
 
 I wanted to make a single page app, simple to use with all the needed tools at fingertips.
 
+The mockup is in the root of project. The final app is slightly different than what I imagine. Mostly because of time needed to implement some ideas.
+
 ## Requirements
 I did the mandatory part. And I lost myself in details so I didn't have time for the bonus part.
-The code is documented.
+The code is commented
 In index.html, you'll find the purpose for each js file, in js files, you'll find the rest of comments
 
 > A citizen must be able to register a new account and log in/out to the app
@@ -20,7 +22,7 @@ I added a button at the bottom right of the map. When user clicks on the map, it
 
 > A citizen must be able to see issues on a map of the area and see the details of those issues
 
-The issues are on a list and on the map at the same time. Details can be seen on the list. the list is actually composed of accordions. I wanted to open the corresponding accordion when user clicks on a marker. I didn't make it. However, when accordion is open, the state changes to a nested state and the map zooms to the selected issue. The purpose of this is to be able to share a link directly to an issue.
+The issues are on a list and on the map at the same time. Details can be seen on the list. the list is actually composed of accordions. When user clicks on a marker or in the list, the accordion opens. The list scrolls to the selected issue. When accordion is open, the state changes to a nested state.
 
 > A citizen must be able to filter issues by type so as to see only some issues (on the map and/or in other screens)
 
