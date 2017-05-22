@@ -1,15 +1,12 @@
 /**
  * Controls the issue details in the accordion body on the left panel and the comments
  */
-angular.module('app').controller('IssueCtrl', function(IssuesService, CommentsService, $stateParams, $uibModal, $scope) {
+angular.module('app').controller('IssueCtrl', function(IssuesService, CommentsService, $stateParams, $scope) {
   var issueCtrl = this;
   issueCtrl.comments = {}; // comments related to the current issue
   issueCtrl.comment = {}; // new comment
 
   var issueId = $stateParams.id;
-  IssuesService.getIssue(issueId).then(function(issue) {
-    issueCtrl.issue = issue;
-  });
 
   issueCtrl.getComments = function() {
     issueCtrl.comments.loading = true;
